@@ -37,7 +37,11 @@ class tx_ffpinodecounter_pi1 extends tslib_pibase {
 			return $nodes;
 		}
 	}
-
+	/**
+	 * Counting Nodes
+	 * @param array $nodes The nodes JSON as an Array
+	 * @return array number of nodes
+	 */
 	function countNodes($nodes){
 		$count = array();
 		$count['online'] = 0;
