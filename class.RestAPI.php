@@ -205,7 +205,7 @@ class RestAPI {
 
 		if ($errno = curl_errno($curl))
 		{
-			trigger_error("cURL error ({$errno}):\n ", E_USER_ERROR);
+			trigger_error("cURL error ({$errno}):\n ", E_USER_WARNING);
 			$this -> responseCurlStatus = $errno;
 		}
 
@@ -218,7 +218,7 @@ class RestAPI {
 		else
 		{
 			//CURL Aufruf fehlgeschlagen
-			trigger_error('CURL Aufruf fehlgeschlagen', E_USER_ERROR);
+			trigger_error('CURL Aufruf fehlgeschlagen', E_USER_WARNING);
 			curl_close($curl);
 			return FALSE;
 		}
