@@ -102,21 +102,32 @@ class tx_ffpinodecounter_pi1 extends tslib_pibase {
 			$external = FALSE;
 		}
 		$nodes = $this->getNodes($this->nodeListFile,$external);
-		$count = $this->countNodes($nodes);
+        if($nodes != FALSE)
+        {
+            $count = $this->countNodes($nodes);
+            // Write data in Template vars
+            $markerArray['###COUNTER-TOTAL###'] = $count['total'];
+            $markerArray['###COUNTER-ONLINE###'] = $count['online'];
+            $markerArray['###COUNTER-OFFLINE###'] = $count['offline'];
+            $markerArray['###COUNTER-CLIENTS###'] = $count['clients'];
+            // Write labels in Template vars
+            $markerArray['###LL-NODES-ONLINE###'] = $this->pi_getLL('nodes-online');
+            $markerArray['###LL-NODES-OFFLINE###'] = $this->pi_getLL('nodes-offline');
+            $markerArray['###LL-CLIENTS###'] = $this->pi_getLL('clients');
+            $markerArray['###LL-OF###'] = $this->pi_getLL('of');
 
-		// Write data in Template vars
-		$markerArray['###COUNTER-TOTAL###'] = $count['total'];
-		$markerArray['###COUNTER-ONLINE###'] = $count['online'];
-		$markerArray['###COUNTER-OFFLINE###'] = $count['offline'];
-		$markerArray['###COUNTER-CLIENTS###'] = $count['clients'];
-		// Write labels in Template vars
-		$markerArray['###LL-NODES-ONLINE###'] = $this->pi_getLL('nodes-online');
-		$markerArray['###LL-NODES-OFFLINE###'] = $this->pi_getLL('nodes-offline');
-		$markerArray['###LL-CLIENTS###'] = $this->pi_getLL('clients');
-		$markerArray['###LL-OF###'] = $this->pi_getLL('of');
+            // Create the content by replacing the content markers in the template
+            $content = $this->cObj->substituteMarkerArray($subpart, $markerArray);
+        }
+        else
+        {
+            //no data
+            $content = '';
+        }
 
-		// Create the content by replacing the content markers in the template
-		$content = $this->cObj->substituteMarkerArray($subpart, $markerArray);
+
+
+
 
 		return $this->pi_wrapInBaseClass($content);
 	}
