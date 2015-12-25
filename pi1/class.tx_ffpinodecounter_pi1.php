@@ -37,6 +37,7 @@ class tx_ffpinodecounter_pi1 extends tslib_pibase {
 			return $nodes;
 		}
 	}
+	
 	/**
 	 * Counting Nodes
 	 * @param array $nodes The nodes JSON as an Array
@@ -50,12 +51,12 @@ class tx_ffpinodecounter_pi1 extends tslib_pibase {
 		$count['clients'] = 0;
 
 		for($i = 0; $i < count($nodes); ++$i) {
-			if($nodes[$i]['status']['online'] === TRUE)
+			if($nodes[$i]['status']['online'] === TRUE AND $nodes[$i]['role'] != 'gate')
 			{
 				$count['online']++;
 				$count['total']++;
 			}
-			else
+			elseif($nodes[$i]['role'] != 'gate')
 			{
 				$count['offline']++;
 				$count['total']++;
