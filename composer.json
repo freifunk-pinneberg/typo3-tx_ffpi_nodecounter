@@ -1,0 +1,33 @@
+{
+  "name": "ffpi/nodecounter",
+  "type": "typo3-cms-extension",
+  "description": "Freifunk Nodecounter",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "freifunk",
+    "nodes"
+  ],
+  "homepage": "https://pinneberg.freifunk.net",
+  "authors": [
+    {
+      "name": "Kevin Quiatkowski",
+      "role": "Developer",
+      "homepage": "https://pinneberg.freifunk.net"
+    }
+  ],
+  "license": [
+    "GPL-3.0"
+  ],
+  "require": {
+    "typo3/cms-core": ">=6.2.0,<7.6"
+  },
+  "replace": {
+    "ffpi_nodecounter": "self.version",
+    "typo3-ter/ffpi-nodecounter": "self.version"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  }
+}
