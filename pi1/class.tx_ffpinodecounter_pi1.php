@@ -33,7 +33,7 @@ class tx_ffpinodecounter_pi1 extends tslib_pibase {
 		else
 		{
 			$json = file_get_contents($path);
-			$nodes = json_decode($json);
+			$nodes = json_decode($json, true);
 			return $nodes;
 		}
 	}
