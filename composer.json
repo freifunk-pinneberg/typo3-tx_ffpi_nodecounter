@@ -1,33 +1,39 @@
 {
   "name": "ffpi/nodecounter",
-  "type": "typo3-cms-extension",
-  "description": "Freifunk Nodecounter",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "freifunk",
-    "nodes"
-  ],
+  "description": "Theme for Freifunk Pinneberg",
   "homepage": "https://pinneberg.freifunk.net",
   "authors": [
     {
       "name": "Kevin Quiatkowski",
-      "role": "Developer",
-      "homepage": "https://pinneberg.freifunk.net"
+      "role": "Developer"
     }
   ],
-  "license": [
-    "GPL-3.0"
-  ],
-  "require": {
-    "typo3/cms-core": ">=6.2.0,<7.6"
+  "support": {
+    "forum": "https://pinneberg.freifunk.net/forum/",
+    "source": "https://github.com/freifunk-pinneberg/typo3-tx_ffpi_theme"
   },
+  "keywords": [
+    "Freifunk",
+    "Pinneberg",
+    "nodes",
+    "counter"
+  ],
+  "license": "GPL-3.0",
+  "type": "typo3-cms-extension",
   "replace": {
     "ffpi_nodecounter": "self.version",
-    "typo3-ter/ffpi-nodecounter": "self.version"
+    "ffpi/nodecounter": "self.version"
   },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+  "require": {
+    "typo3/cms-core": "7.6.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "FFPI\\FfpiNodecounter\\": "web/typo3conf/ext/ffpi_nodecounter/Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
   }
 }
