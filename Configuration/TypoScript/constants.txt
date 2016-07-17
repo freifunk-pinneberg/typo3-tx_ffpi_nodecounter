@@ -1,0 +1,15 @@
+
+plugin.tx_ffpinodecounter_counter {
+	view {
+		# cat=plugin.tx_ffpinodecounter_counter/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:ffpi_nodecounter/Resources/Private/Templates/
+		# cat=plugin.tx_ffpinodecounter_counter/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:ffpi_nodecounter/Resources/Private/Partials/
+		# cat=plugin.tx_ffpinodecounter_counter/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:ffpi_nodecounter/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_ffpinodecounter_counter//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
