@@ -1,7 +1,18 @@
 <?php
 if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
+	die('Access denied.');
 }
 
-t3lib_extMgm::addPItoST43($_EXTKEY, 'pi1/class.tx_ffpinodecounter_pi1.php', '_pi1', 'list_type', 0);
-?>
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'FFPI.' . $_EXTKEY,
+	'Counter',
+	array(
+		'Node' => 'count',
+		
+	),
+	// non-cacheable actions
+	array(
+		'Node' => '',
+		
+	)
+);

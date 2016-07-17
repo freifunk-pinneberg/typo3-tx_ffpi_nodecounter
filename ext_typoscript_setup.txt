@@ -1,3 +1,0 @@
-plugin.tx_ffpinodecounter_pi1.templateFile = EXT:ffpi_nodecounter/pi1/templates/counter.html
-plugin.tx_ffpinodecounter_pi1.nodeListFile = http://meshviewer.pinneberg.freifunk.net/data/nodelist.json
-plugin.tx_ffpinodecounter_pi1.nodeListExternal = TRUE
