@@ -1,13 +1,13 @@
-
 plugin.tx_ffpinodecounter_counter {
-	view {
-		templateRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.templateRootPath}
-		partialRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.partialRootPath}
-		layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
-	}
-	persistence {
-		storagePid = {$plugin.tx_ffpinodecounter_counter.persistence.storagePid}
-	}
+    view {
+        templateRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.templateRootPath}
+        partialRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.partialRootPath}
+        layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
+    }
+
+    persistence {
+        storagePid = {$plugin.tx_ffpinodecounter_counter.persistence.storagePid}
+    }
 }
 
 plugin.tx_ffpinodecounter._CSS_DEFAULT_STYLE (
