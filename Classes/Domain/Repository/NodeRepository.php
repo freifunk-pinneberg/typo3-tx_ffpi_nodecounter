@@ -1,30 +1,30 @@
 <?php
 namespace FFPI\FfpiNodecounter\Domain\Repository;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+    /***************************************************************
+     *
+     *  Copyright notice
+     *
+     *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
+     *
+     *  All rights reserved
+     *
+     *  This script is part of the TYPO3 project. The TYPO3 project is
+     *  free software; you can redistribute it and/or modify
+     *  it under the terms of the GNU General Public License as published by
+     *  the Free Software Foundation; either version 3 of the License, or
+     *  (at your option) any later version.
+     *
+     *  The GNU General Public License can be found at
+     *  http://www.gnu.org/copyleft/gpl.html.
+     *
+     *  This script is distributed in the hope that it will be useful,
+     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *  GNU General Public License for more details.
+     *
+     *  This copyright notice MUST APPEAR in all copies of the script!
+     ***************************************************************/
 
 /**
  * The repository for Nodes
@@ -32,10 +32,6 @@ namespace FFPI\FfpiNodecounter\Domain\Repository;
 class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
-     * @inject
-     */
     protected $configurationManager;
 
     protected $data;
@@ -44,16 +40,15 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
     protected $external;
 
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    protected $settings;
+
+    /**
+     * @param $settings
+     * @return void
+     */
+    public function setSettings($settings)
     {
-        parent::__construct($objectManager);
-
-        $this->configurationManager = new \typo3\CMS\Extbase\Configuration\ConfigurationManager();
-        var_dump($this->configurationManager);
-        #$settings = $this->configurationManager->getConfiguration('Settings', 'ffpi_nodecounter', 'Counter');
-
-        var_dump($this->settings);
-
+        $this->settings = $settings;
     }
 
     /**
@@ -61,6 +56,10 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     private function getData()
     {
+        //get remote data if local empty
+        if (empty($this->data)) {
+            $this->getJson();
+        }
         return $this->data;
     }
 
@@ -76,7 +75,10 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param string $file
      * @param boolean $external
      */
-    private function getJson($file, $external){
+    private function getJson()
+    {
+        $file = $this->settings['file'];
+        $external = $this->settings['external']; //@todo get only external via RestAPI
         $restApi = new \FFPI\RestApi();
         $restApi->setRequestApiUrl($file);
         $restApi->setRequestMethod('get');
@@ -90,16 +92,19 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $this->setData($data);
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         $data = $this->getData();
         return $data;
     }
 
-    public function getOnline(){
+    public function getOnline()
+    {
         return array();
     }
 
-    public function getOffline(){
+    public function getOffline()
+    {
         return array();
     }
     
