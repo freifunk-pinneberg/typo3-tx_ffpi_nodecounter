@@ -32,9 +32,11 @@ namespace FFPI\FfpiNodecounter\Domain\Repository;
 class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
+    // @todo implement node role blacklist
+
     protected $configurationManager;
 
-    protected $data;
+    protected $nodes;
 
     protected $file;
 
@@ -54,26 +56,25 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return mixed
      */
-    private function getData()
+    private function getNodes()
     {
         //get remote data if local empty
-        if (empty($this->data)) {
+        if (empty($this->$nodes)) {
             $this->getJson();
         }
-        return $this->data;
+        return $this->nodes;
     }
 
     /**
-     * @param mixed $data
+     * @param mixed $nodes
      */
-    private function setData($data)
+    private function setNodes($nodes)
     {
-        $this->data = $data;
+        $this->nodes = $nodes;
     }
 
     /**
-     * @param string $file
-     * @param boolean $external
+     * @return void
      */
     private function getJson()
     {
@@ -89,23 +90,79 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $data = $restApi->getArray();
 
-        $this->setData($data);
+        $this->setNodes($data['nodes']);
     }
 
+    /**
+     * @return array
+     */
     public function getAll()
     {
-        $data = $this->getData();
+        $data = $this->getNodes();
         return $data;
     }
 
+    /**
+     * @return array
+     */
     public function getOnline()
     {
-        return array();
+        $online = array();
+        foreach ($this->nodes as $node) {
+            if ($node['status']['online'] == true) {
+                $online[] = $node;
+            }
+        }
+        return $online;
     }
 
+    /**
+     * @return array
+     */
     public function getOffline()
     {
-        return array();
+        $offline = array();
+        foreach ($this->nodes as $node) {
+            if ($node['status']['online'] == false) {
+                $offline[] = $node;
+            }
+        }
+        return $offline;
     }
-    
+
+    /**
+     * @return int
+     */
+    public function getClientsCount()
+    {
+
+    }
+
+    /**
+     * @return int
+     */
+    public function getOnlineCount()
+    {
+        $onlineCount = count($this->getOnline());
+        return $onlineCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOfflineCount()
+    {
+        $offlineCount = count($this->getOffline());
+        return $offlineCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllCount()
+    {
+        $allCount = count($this->getAll());
+        return $allCount;
+    }
+
 }
