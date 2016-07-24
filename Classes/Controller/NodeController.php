@@ -48,8 +48,19 @@ class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function countAction()
     {
         $this->nodeRepository->setSettings($this->settings);
-        $nodes = $this->nodeRepository->getAll();
+        //Full Nodes data only for debugging
+        $nodes = $this->nodeRepository->getAllNodes();
         $this->view->assign('nodes', $nodes);
+
+        //Get Counter data
+        $counter['total'] = $this->nodeRepository->getNodesAllCount();
+        $counter['offline'] = $this->nodeRepository->getNodesOfflineCount();
+        $counter['online'] = $this->nodeRepository->getNodesOnlineCount();
+        $counter['clients'] = $this->nodeRepository->getClientCount();
+
+        //Assign counter to view
+        $this->view->assign('counter', $counter);
+
     }
 
 }
