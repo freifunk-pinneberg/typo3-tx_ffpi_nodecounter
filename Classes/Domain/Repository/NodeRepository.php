@@ -111,8 +111,9 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if (!isset($this->settings) OR empty($this->settings)) {
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
-        $file = $this->settings['file'];
-        $external = $this->settings['external']; //@todo get only external via RestAPI
+        
+        $file = $this->settings['nodeListFile'];
+        $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
         $restApi = new \FFPI\FfpiNodecounter\Utility\RestApi();
         $restApi->setRequestApiUrl($file);
         $restApi->setRequestMethod('get');
@@ -143,7 +144,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if (empty($this->nodesOnline)) {
             $online = array();
             foreach ($this->nodes as $node) {
-                if ($node['status']['online'] == true) {
+                if ($node['flags']['online'] == true) {
                     $online[] = $node;
                 }
             }
@@ -160,7 +161,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if (empty($this->nodesOffline)) {
             $offline = array();
             foreach ($this->nodes as $node) {
-                if ($node['status']['online'] == false) {
+                if ($node['flags']['online'] == false) {
                     $offline[] = $node;
                 }
             }
@@ -178,8 +179,9 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $count = 0;
             $nodes = $this->getOnlineNodes();
             foreach ($nodes as $node) {
-                $count = $count + $node['status']['clients'];
+                $count = $count + $node['statistics']['clients'];
             }
+            $this->clientCount = $count;
         }
         return $this->clientCount;
     }

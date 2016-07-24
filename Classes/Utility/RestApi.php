@@ -157,7 +157,7 @@ class RestApi
     public function sendRequest()
     {
         if (!isset($this->requestApiUrl) OR $this->requestApiUrl == '') {
-            trigger_error('keine API URL', E_USER_ERROR);
+            trigger_error('no API URL', E_USER_ERROR);
             return FALSE;
         }
 

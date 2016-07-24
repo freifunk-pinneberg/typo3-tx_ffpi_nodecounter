@@ -6,6 +6,9 @@
 			<trans-unit id="tx_ffpinodecounter_domain_model_node">
 				<source>Node</source>
 			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.nodes_online">
+                <source>Nodes Online</source>
+            </trans-unit>
 			<trans-unit id="tx_ffpinodecounter_domain_model_node.id">
 				<source>Id</source>
 			</trans-unit>
@@ -24,6 +27,12 @@
 			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients">
 				<source>Clients</source>
 			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients_online">
+				<source>Clients connected</source>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.of">
+            	<source>from</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>
