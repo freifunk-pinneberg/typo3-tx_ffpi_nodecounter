@@ -111,7 +111,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if (!isset($this->settings) OR empty($this->settings)) {
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
-        
+
         $file = $this->settings['nodeListFile'];
         $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
         $restApi = new \FFPI\FfpiNodecounter\Utility\RestApi();
