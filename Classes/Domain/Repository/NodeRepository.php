@@ -113,7 +113,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         $file = $this->settings['file'];
         $external = $this->settings['external']; //@todo get only external via RestAPI
-        $restApi = new \FFPI\RestApi();
+        $restApi = new \FFPI\FfpiNodecounter\Utility\RestApi();
         $restApi->setRequestApiUrl($file);
         $restApi->setRequestMethod('get');
         $requestHeader = array('Accept: application/json');

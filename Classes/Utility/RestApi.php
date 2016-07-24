@@ -1,5 +1,5 @@
 <?php
-namespace FFPI;
+namespace FFPI\FfpiNodecounter\Utility;
 
 /***************************************************************
  *
