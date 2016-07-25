@@ -49,6 +49,8 @@ class RestApi
 
     /*
      * Prüfen ob es sich ums JSON Format handelt.
+     *
+     * @return boolean
      */
     private function isJson($string)
     {
@@ -64,8 +66,8 @@ class RestApi
     public function setRequestData($dataArray)
     {
         if (!is_array($dataArray)) {
-            trigger_error('$dataArray ist kein Array', E_USER_ERROR);
-            return FALSE;
+            trigger_error('$dataArray is not an raay', E_USER_ERROR);
+            return false;
         }
 
         $i = 0;
@@ -88,7 +90,7 @@ class RestApi
             return $this->requestHeader = $requestHeader;
         } else {
             trigger_error('Request Header could not be set', E_USER_WARNING);
-            return FALSE;
+            return false;
         }
 
     }
@@ -98,7 +100,6 @@ class RestApi
      *
      * @param string $requestMethod 'get' oder 'post'
      * @return boolean
-     * @author
      */
     public function setRequestMethod($requestMethod = 'get')
     {
@@ -131,11 +132,11 @@ class RestApi
     public function getArray()
     {
         $json = $this->getJson();
-        if ($json !== FALSE) {
-            $array = json_decode($json, TRUE);
+        if ($json !== false) {
+            $array = json_decode($json, true);
             return $array;
         } else {
-            return FALSE;
+            return false;
         }
 
     }
@@ -150,7 +151,7 @@ class RestApi
         if (isset($this->responseCurlStatus)) {
             return $this->responseCurlStatus;
         } else {
-            return NULL;
+            return null;
         }
     }
 
@@ -158,7 +159,7 @@ class RestApi
     {
         if (!isset($this->requestApiUrl) OR $this->requestApiUrl == '') {
             trigger_error('no API URL', E_USER_ERROR);
-            return FALSE;
+            return false;
         }
 
         if (!isset($this->requestMethod) OR $this->requestMethod == '') {
@@ -167,7 +168,7 @@ class RestApi
 
         $curl = curl_init($this->requestApiUrl);
         //Im Erfolgsfall nicht TRUE sondern Daten zurückliefern
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         //Useragent
         curl_setopt($curl, CURLOPT_USERAGENT, 'TYPO3 at ' . $_SERVER['HTTP_HOST']);
@@ -176,7 +177,7 @@ class RestApi
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->requestConnectTimeout);
 
         //301 und 302 folgen
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         //Custom Header
         if (isset($this->requestHeader) AND is_array($this->requestHeader)) {
@@ -185,11 +186,11 @@ class RestApi
 
         //Sende Methode
         if ($this->requestMethod === 'post') {
-            curl_setopt($curl, CURLOPT_POST, TRUE);
-            curl_setopt($curl, CURLOPT_HTTPGET, FALSE);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_HTTPGET, false);
         } elseif ($this->requestMethod === 'get') {
-            curl_setopt($curl, CURLOPT_POST, FALSE);
-            curl_setopt($curl, CURLOPT_HTTPGET, TRUE);
+            curl_setopt($curl, CURLOPT_POST, false);
+            curl_setopt($curl, CURLOPT_HTTPGET, true);
         } else {
             trigger_error('keine gültige Request Methode gefunden', E_USER_ERROR);
         }
@@ -208,7 +209,8 @@ class RestApi
 
         $this->responseStatusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($this->responseStatusCode != '200') {
-            trigger_error("cURL HTTP Statuscode ist '" . $this->responseStatusCode . "' für " . $this->requestApiUrl . " :\n ", E_USER_NOTICE);
+            trigger_error("cURL HTTP Statuscode was '" . $this->responseStatusCode . "' for " . $this->requestApiUrl . " :\n ",
+                E_USER_NOTICE);
         }
 
         if ($errno = curl_errno($curl)) {
@@ -216,15 +218,15 @@ class RestApi
             $this->responseCurlStatus = $errno;
         }
 
-        if ($curl_response !== FALSE) {
+        if ($curl_response !== false) {
             $this->responseRawData = $curl_response;
             curl_close($curl);
-            return TRUE;
+            return true;
         } else {
             //CURL Aufruf fehlgeschlagen
-            trigger_error('CURL Aufruf fehlgeschlagen', E_USER_WARNING);
+            trigger_error('CURL request failed', E_USER_WARNING);
             curl_close($curl);
-            return FALSE;
+            return false;
         }
 
     }
