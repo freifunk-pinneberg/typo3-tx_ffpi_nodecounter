@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-07-17T14:29:16Z" product-name="ffpi_nodecounter">
+		<header/>
+		<body>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node">
+				<target>Knoten</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.nodes_online">
+                <target>Knoten Online</target>
+            </trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.id">
+				<target>Id</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.hostname">
+				<target>Hostname</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.role">
+				<target>Rolle</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.online">
+				<target>Online</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.gateway">
+				<target>Gateway</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients">
+				<target>Clients</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients_online">
+				<target>Clients verbunden</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.of">
+            	<target>von</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>
