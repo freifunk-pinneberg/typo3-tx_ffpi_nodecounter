@@ -39,7 +39,6 @@
     "phploc/phploc": "3.0.*",
     "squizlabs/php_codesniffer": "2.6.*",
     "sebastian/phpcpd": "2.0.*"
-
   },
   "autoload": {
     "psr-4": {
@@ -55,5 +54,11 @@
       "mkdir -p .Build/Web/typo3conf/ext/",
       "[ -L .Build/Web/typo3conf/ext/ffpi_nodecounter ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/ffpi_nodecounter"
     ]
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
   }
 }
