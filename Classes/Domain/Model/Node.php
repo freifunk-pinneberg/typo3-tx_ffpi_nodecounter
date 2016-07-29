@@ -1,30 +1,30 @@
 <?php
 namespace FFPI\FfpiNodecounter\Domain\Model;
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+    /***************************************************************
+     *
+     *  Copyright notice
+     *
+     *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
+     *
+     *  All rights reserved
+     *
+     *  This script is part of the TYPO3 project. The TYPO3 project is
+     *  free software; you can redistribute it and/or modify
+     *  it under the terms of the GNU General Public License as published by
+     *  the Free Software Foundation; either version 3 of the License, or
+     *  (at your option) any later version.
+     *
+     *  The GNU General Public License can be found at
+     *  http://www.gnu.org/copyleft/gpl.html.
+     *
+     *  This script is distributed in the hope that it will be useful,
+     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *  GNU General Public License for more details.
+     *
+     *  This copyright notice MUST APPEAR in all copies of the script!
+     ***************************************************************/
 
 /**
  * Node
@@ -38,42 +38,42 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $id = '';
-    
+
     /**
      * hostname
      *
      * @var string
      */
     protected $hostname = '';
-    
+
     /**
      * role
      *
      * @var string
      */
     protected $role = '';
-    
+
     /**
      * online
      *
      * @var bool
      */
     protected $online = false;
-    
+
     /**
      * gateway
      *
      * @var string
      */
     protected $gateway = '';
-    
+
     /**
      * clients
      *
      * @var int
      */
     protected $clients = 0;
-    
+
     /**
      * Returns the id
      *
@@ -83,7 +83,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the id
      *
@@ -94,7 +94,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->id = $id;
     }
-    
+
     /**
      * Returns the hostname
      *
@@ -104,7 +104,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->hostname;
     }
-    
+
     /**
      * Sets the hostname
      *
@@ -115,7 +115,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->hostname = $hostname;
     }
-    
+
     /**
      * Returns the role
      *
@@ -125,7 +125,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->role;
     }
-    
+
     /**
      * Sets the role
      *
@@ -136,7 +136,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->role = $role;
     }
-    
+
     /**
      * Returns the online
      *
@@ -146,7 +146,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->online;
     }
-    
+
     /**
      * Sets the online
      *
@@ -157,7 +157,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->online = $online;
     }
-    
+
     /**
      * Returns the boolean state of online
      *
@@ -167,7 +167,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->online;
     }
-    
+
     /**
      * Returns the gateway
      *
@@ -177,7 +177,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->gateway;
     }
-    
+
     /**
      * Sets the gateway
      *
@@ -188,7 +188,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->gateway = $gateway;
     }
-    
+
     /**
      * Returns the clients
      *
@@ -198,7 +198,7 @@ class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->clients;
     }
-    
+
     /**
      * Sets the clients
      *
