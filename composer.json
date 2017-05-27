@@ -44,7 +44,7 @@
   },
   "autoload": {
     "psr-4": {
-      "FFPI\\FfpiNodecounter\\": "web/typo3conf/ext/ffpi_nodecounter/Classes"
+      "FFPI\\FfpiNodecounter\\": "Classes"
     }
   },
   "autoload-dev": {

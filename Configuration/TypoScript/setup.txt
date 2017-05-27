@@ -10,36 +10,19 @@ plugin.tx_ffpinodecounter_counter {
     }
 }
 
-plugin.tx_ffpinodecounter._CSS_DEFAULT_STYLE (
-	textarea.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
+ajax_counter = PAGE
+ajax_counter {
+    typeNum = 2652017
 
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-type:application/html
+        xhtml_cleaning = 0
+        debug = 0
+        cache_period = 60
+        admPanel = 0
+    }
 
-	.tx-ffpi-nodecounter table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
+    10 < tt_content.list.20.ffpinodecounter_counter
+}
 
-	.tx-ffpi-nodecounter table th {
-		font-weight:bold;
-	}
-
-	.tx-ffpi-nodecounter table td {
-		vertical-align:top;
-	}
-
-	.typo3-messages .message-error {
-		color:red;
-	}
-
-	.typo3-messages .message-ok {
-		color:green;
-	}
-
-)

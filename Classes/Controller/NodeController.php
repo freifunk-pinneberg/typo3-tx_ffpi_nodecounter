@@ -38,7 +38,7 @@ class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository
      * @inject
      */
-    protected $nodeRepository = null;
+    protected $nodeRepository;
 
     /**
      * action count
@@ -49,8 +49,8 @@ class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $this->nodeRepository->setSettings($this->settings);
         //Full Nodes data only for debugging
-        $nodes = $this->nodeRepository->getAllNodes();
-        $this->view->assign('nodes', $nodes);
+        #$nodes = $this->nodeRepository->getAllNodes();
+        #$this->view->assign('nodes', $nodes);
 
         //Get Counter data
         $counter['total'] = $this->nodeRepository->getNodesAllCount();
