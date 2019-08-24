@@ -36,9 +36,17 @@ class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * nodeRepository
      *
      * @var \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository
-     * @inject
+     *
      */
     protected $nodeRepository;
+
+    /**
+     * @param \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository
+     */
+    public function injectNodeRepository(\FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository)
+    {
+        $this->nodeRepository = $nodeRepository;
+    }
 
     /**
      * action count
