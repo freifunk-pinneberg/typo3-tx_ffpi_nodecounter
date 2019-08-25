@@ -69,8 +69,6 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     protected $clientCount;
 
-    //Settings
-    // @todo implement node role blacklist
     protected $settings;
 
 
