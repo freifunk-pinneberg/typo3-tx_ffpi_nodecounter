@@ -4,10 +4,6 @@ plugin.tx_ffpinodecounter_counter {
         partialRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.partialRootPath}
         layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
     }
-
-    persistence {
-        storagePid = {$plugin.tx_ffpinodecounter_counter.persistence.storagePid}
-    }
 }
 
 ajax_counter = PAGE
