@@ -35,11 +35,17 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @var array $nodes stores all nodes
      */
-    protected $nodes;
+    protected $nodes = [];
 
-    protected $nodesOnline;
+    /**
+     * @var array
+     */
+    protected $nodesOnline = [];
 
-    protected $nodesOffline;
+    /**
+     * @var array
+     */
+    protected $nodesOffline = [];
 
     /**
      * nodesAllCount
@@ -131,6 +137,9 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getAllNodes()
     {
         $data = $this->getNodes();
+        if(!$data){
+            $data = [];
+        }
         return $data;
     }
 
