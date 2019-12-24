@@ -1,30 +1,33 @@
 <?php
+
 namespace FFPI\FfpiNodecounter\Domain\Repository;
 
-    /***************************************************************
-     *
-     *  Copyright notice
-     *
-     *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
-     *
-     *  All rights reserved
-     *
-     *  This script is part of the TYPO3 project. The TYPO3 project is
-     *  free software; you can redistribute it and/or modify
-     *  it under the terms of the GNU General Public License as published by
-     *  the Free Software Foundation; either version 3 of the License, or
-     *  (at your option) any later version.
-     *
-     *  The GNU General Public License can be found at
-     *  http://www.gnu.org/copyleft/gpl.html.
-     *
-     *  This script is distributed in the hope that it will be useful,
-     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *  GNU General Public License for more details.
-     *
-     *  This copyright notice MUST APPEAR in all copies of the script!
-     ***************************************************************/
+use FFPI\FfpiNodecounter\Utility\RestApi;
+
+/***************************************************************
+ *
+ *  Copyright notice
+ *
+ *  (c) 2016 Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
+ *
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * The repository for Nodes
@@ -118,7 +121,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $file = $this->settings['nodeListFile'];
         $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
-        $restApi = new \FFPI\FfpiNodecounter\Utility\RestApi();
+        $restApi = new RestApi();
         $restApi->setRequestApiUrl($file);
         $restApi->setRequestMethod('get');
         $requestHeader = array('Accept: application/json');
@@ -137,7 +140,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getAllNodes()
     {
         $data = $this->getNodes();
-        if(!$data){
+        if (!$data) {
             $data = [];
         }
         return $data;
@@ -146,11 +149,11 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array
      */
-    public function getOnlineNodes()
+    public function getOnlineNodes(): array
     {
         if (empty($this->nodesOnline)) {
             $online = array();
-            foreach ($this->nodes as $node) {
+            foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == true) {
                     $online[] = $node;
                 }
@@ -163,11 +166,11 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array
      */
-    public function getOfflineNodes()
+    public function getOfflineNodes(): array
     {
         if (empty($this->nodesOffline)) {
             $offline = array();
-            foreach ($this->nodes as $node) {
+            foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == false) {
                     $offline[] = $node;
                 }
@@ -208,13 +211,13 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return int
      */
-    public function getNodesOfflineCount()
+    public function getNodesOfflineCount(): int
     {
         if (empty($this->nodesOfflineCount)) {
             $offlineCount = count($this->getOfflineNodes());
             $this->nodesOfflineCount = $offlineCount;
         }
-        return $this->nodesOfflineCount;
+        return (int)$this->nodesOfflineCount;
     }
 
     /**

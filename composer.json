@@ -1,6 +1,6 @@
 {
   "name": "ffpi/nodecounter",
-  "description": "Theme for Freifunk Pinneberg",
+  "description": "Displays a Freifunk Nodecounter",
   "homepage": "https://pinneberg.freifunk.net",
   "authors": [
     {
