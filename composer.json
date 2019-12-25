@@ -1,33 +1,70 @@
 {
   "name": "ffpi/nodecounter",
-  "type": "typo3-cms-extension",
-  "description": "Freifunk Nodecounter",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "freifunk",
-    "nodes"
-  ],
+  "description": "Displays a Freifunk Nodecounter",
   "homepage": "https://pinneberg.freifunk.net",
   "authors": [
     {
       "name": "Kevin Quiatkowski",
-      "role": "Developer",
-      "homepage": "https://pinneberg.freifunk.net"
+      "role": "Developer"
     }
   ],
-  "license": [
-    "GPL-3.0"
-  ],
-  "require": {
-    "typo3/cms-core": ">=6.2.0,<7.6"
+  "support": {
+    "forum": "https://pinneberg.freifunk.net/forum/",
+    "source": "https://github.com/freifunk-pinneberg/typo3-tx_ffpi_nodecounter"
   },
+  "keywords": [
+    "Freifunk",
+    "Pinneberg",
+    "nodes",
+    "counter",
+    "ffmap-backend"
+  ],
+  "license": "GPL-3.0",
+  "type": "typo3-cms-extension",
   "replace": {
     "ffpi_nodecounter": "self.version",
     "typo3-ter/ffpi-nodecounter": "self.version"
   },
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+    "bin-dir": ".Build/bin",
+    "web-dir": ".Build/web"
+  },
+  "minimum-stability": "beta",
+  "require": {
+    "typo3/cms-core": "8.7.0 - 9.5.99"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.4.*",
+    "phpmd/phpmd": "2.4.*",
+    "pdepend/pdepend": "2.2.*",
+    "phploc/phploc": "3.0.*",
+    "squizlabs/php_codesniffer": "2.6.*",
+    "sebastian/phpcpd": "2.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "FFPI\\FfpiNodecounter\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "scripts": {
+    "post-update-cmd": [
+    ],
+    "post-install-cmd": [
+    ],
+    "post-autoload-dump": [
+      "mkdir -p .Build/Web/typo3conf/ext/",
+      "[ -L .Build/Web/typo3conf/ext/ffpi_nodecounter ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/ffpi_nodecounter"
+    ]
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
   }
 }

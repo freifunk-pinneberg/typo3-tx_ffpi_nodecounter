@@ -15,6 +15,7 @@ Thumbs.db:*
 # Files from IDE #
 ##################
 .project
+.idea
 ~*.php.html
 *.bak
 *.swp
