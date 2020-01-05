@@ -1,17 +1,26 @@
-Freifunk Nodecounter Extension für TYPO3 CMS
+Freifunk Nodecounter Extension for TYPO3 CMS
 =============================================
 
-Diese Extension zählt die Knoten einer Freifunk Community anhand der ausgabe von [ffmap-backend](https://github.com/ffnord/ffmap-backend).
-Im Frontend lässt sich dann folgendes anzeigen.
+This extension counts the nodes of a Freifunk community based on the output of [ffmap-backend](https://github.com/ffnord/ffmap-backend).
+The following can then be displayed in the frontend.
 
- - Gesammtzhal der Knoten
- - Anzahl der online Knoten
- - Anzahl der offline Knoten
- - Anzahl der verbundenen User
+ - Total nodes
+ - Number of online nodes
+ - Number of offline nodes
+ - Number of connected users
 
-Im Typoscript muss der Pfad zur nodes.json angeben werden. Dabei kann es sich sowohl um eine Lokal Datei, als auch um eine externe HTTP Resource handeln. Ein Typoscript Beispiel liegt in `ext_typoscript_setup.txt`
-Die ausgabe kann mit einem HTML Template angepasst werden. Ein beispiel liegt unter `pi1/templates/counter.html`
+The path to nodes.json must be specified in the Typoscript. This can be a local file or an external http(s) resource.
+example:
+```
+plugin.tx_ffpinodecounter {
+     settings.nodeListFile = http://meshviewer.pinneberg.freifunk.net/data/nodes.json
+     settings.nodeListExternal = TRUE
+ }
+```
 
+The output can be customized with a fluid template. The template paths can be set using TypoScript. `plugin.tx_ffpinodecounter_counter.view`
 
-Dieses Plugin wurde ursprünglich für [Freifunk Pinneberg](https://pinneberg.freifunk.net) entwickelt.
-Der Quellcode steht unter der GNU General Public License
+The counter is also available via PageType 2652017, and can therefore also be updated via ajax or iframe.
+
+This plugin was originally written for [Freifunk Pinneberg](https://pinneberg.freifunk.net).
+The source code is under the GNU General Public License.
