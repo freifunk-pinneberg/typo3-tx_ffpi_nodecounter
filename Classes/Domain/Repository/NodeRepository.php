@@ -3,6 +3,8 @@
 namespace FFPI\FfpiNodecounter\Domain\Repository;
 
 use FFPI\FfpiNodecounter\Utility\RestApi;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *
@@ -34,6 +36,8 @@ use FFPI\FfpiNodecounter\Utility\RestApi;
  */
 class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    const CACHE_NAME = 'nodes';
+
     //Data
     /**
      * @var array $nodes stores all nodes
@@ -111,6 +115,31 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
+     * @return array|null
+     */
+    private function getCachedNodes(): ?array
+    {
+        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
+
+        $entry = $cache->get(self::CACHE_NAME);
+        if(!is_array($entry)){
+            return null;
+        }
+        return $entry;
+    }
+
+    /**
+     * @param array $nodes
+     */
+    private function saveNodesCache(array $nodes)
+    {
+        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
+
+        // Save value in cache
+        $cache->set(self::CACHE_NAME, $nodes, [], 60);
+    }
+
+    /**
      * @return void
      */
     private function getJson()
@@ -119,19 +148,27 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
 
-        $file = $this->settings['nodeListFile'];
-        $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
-        $restApi = new RestApi();
-        $restApi->setRequestApiUrl($file);
-        $restApi->setRequestMethod('get');
-        $requestHeader = array('Accept: application/json');
-        $restApi->setRequestHeader($requestHeader);
+        $cachedNodes = $this->getCachedNodes();
+        if(is_array($cachedNodes)){
+            $this->setNodes($cachedNodes);
+        } else {
+            $file = $this->settings['nodeListFile'];
+            $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
+            $restApi = new RestApi();
+            $restApi->setRequestApiUrl($file);
+            $restApi->setRequestMethod('get');
+            $requestHeader = array('Accept: application/json');
+            $restApi->setRequestHeader($requestHeader);
 
-        $request = $restApi->sendRequest();
+            $request = $restApi->sendRequest();
 
-        $data = $restApi->getArray();
+            $data = $restApi->getArray();
 
-        $this->setNodes($data['nodes']);
+            $this->setNodes($data['nodes']);
+            $this->saveNodesCache($data['nodes']);
+        }
+
+
     }
 
     /**
