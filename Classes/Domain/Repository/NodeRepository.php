@@ -117,12 +117,35 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array|null
      */
+    private function getNodesFromApi(): ?array
+    {
+        $file = $this->settings['nodeListFile'];
+        $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
+        $restApi = new RestApi();
+        $restApi->setRequestApiUrl($file);
+        $restApi->setRequestMethod('get');
+        $requestHeader = array('Accept: application/json');
+        $restApi->setRequestHeader($requestHeader);
+
+        $request = $restApi->sendRequest();
+
+        $data = $restApi->getArray();
+        if (is_array($data)) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return array|null
+     */
     private function getCachedNodes(): ?array
     {
         $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
 
         $entry = $cache->get(self::CACHE_NAME);
-        if(!is_array($entry)){
+        if (!is_array($entry)) {
             return null;
         }
         return $entry;
@@ -136,7 +159,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
 
         // Save value in cache
-        $cache->set(self::CACHE_NAME, $nodes, [], 60);
+        $cache->set(self::CACHE_NAME, $nodes, [], 60*60*24);
     }
 
     /**
@@ -148,27 +171,26 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
 
-        $cachedNodes = $this->getCachedNodes();
-        if(is_array($cachedNodes)){
-            $this->setNodes($cachedNodes);
-        } else {
-            $file = $this->settings['nodeListFile'];
-            $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
-            $restApi = new RestApi();
-            $restApi->setRequestApiUrl($file);
-            $restApi->setRequestMethod('get');
-            $requestHeader = array('Accept: application/json');
-            $restApi->setRequestHeader($requestHeader);
-
-            $request = $restApi->sendRequest();
-
-            $data = $restApi->getArray();
-
-            $this->setNodes($data['nodes']);
-            $this->saveNodesCache($data['nodes']);
+        $cachedData = $this->getCachedNodes();
+        $age = time();
+        if (is_array($cachedData)) {
+            $cachedTime = strtotime($cachedData['timestamp']);
+            $age = $age - $cachedTime;
         }
-
-
+        if (!is_array($cachedData) || $age > 90) {
+            //Cache leer order abgelaufen.
+            $apiData = $this->getNodesFromApi();
+            if (is_array($apiData)) {
+                $this->saveNodesCache($apiData);
+                $this->setNodes($apiData['nodes']);
+            } elseif (is_array($cachedData)) {
+                $this->setNodes($cachedData['nodes']);
+            } else {
+                $this->setNodes([]);
+            }
+        } else {
+            $this->setNodes($cachedData['nodes']);
+        }
     }
 
     /**
