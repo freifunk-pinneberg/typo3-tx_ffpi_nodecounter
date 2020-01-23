@@ -82,6 +82,9 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     protected $clientCount;
 
+    /**
+     * @var array
+     */
     protected $settings;
 
 
@@ -144,7 +147,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
 
-        $entry = $cache->get(self::CACHE_NAME);
+        $entry = $cache->get($this->getCacheName());
         if (!is_array($entry)) {
             return null;
         }
@@ -158,8 +161,16 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
 
+        $nodes['cacheTime'] = time();
         // Save value in cache
-        $cache->set(self::CACHE_NAME, $nodes, [], 60*60*24);
+        $cache->set($this->getCacheName(), $nodes, [], 0);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheName(): string {
+        return crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
     }
 
     /**
@@ -174,7 +185,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $cachedData = $this->getCachedNodes();
         $age = time();
         if (is_array($cachedData)) {
-            $cachedTime = strtotime($cachedData['timestamp']);
+            $cachedTime = $cachedData['cacheTime'];
             $age = $age - $cachedTime;
         }
         if (!is_array($cachedData) || $age > 90) {
