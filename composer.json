@@ -2,6 +2,8 @@
   "name": "ffpi/nodecounter",
   "description": "Displays a Freifunk Nodecounter",
   "homepage": "https://pinneberg.freifunk.net",
+  "license": "GPL-3.0",
+  "type": "typo3-cms-extension",
   "authors": [
     {
       "name": "Kevin Quiatkowski",
@@ -19,8 +21,6 @@
     "counter",
     "ffmap-backend"
   ],
-  "license": "GPL-3.0",
-  "type": "typo3-cms-extension",
   "replace": {
     "ffpi_nodecounter": "self.version",
     "typo3-ter/ffpi-nodecounter": "self.version"
@@ -32,15 +32,9 @@
   },
   "minimum-stability": "beta",
   "require": {
-    "typo3/cms-core": "7.6.0 - 9.5.99"
+    "typo3/cms-core": "9.5.0 - 10.4.99"
   },
   "require-dev": {
-    "phpunit/phpunit": "5.4.*",
-    "phpmd/phpmd": "2.4.*",
-    "pdepend/pdepend": "2.2.*",
-    "phploc/phploc": "3.0.*",
-    "squizlabs/php_codesniffer": "2.6.*",
-    "sebastian/phpcpd": "2.0.*"
   },
   "autoload": {
     "psr-4": {
@@ -64,7 +58,8 @@
   "extra": {
     "typo3/cms": {
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web"
+      "web-dir": ".Build/Web",
+      "extension-key": "ffpi_nodecounter"
     }
   }
 }

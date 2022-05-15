@@ -10,7 +10,7 @@
  * "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Nodecounter',
     'description' => 'Counts Freifunk nodes',
     'category' => 'plugin',
@@ -21,12 +21,12 @@ $EM_CONF[$_EXTKEY] = array(
     'uploadfolder' => '0',
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '2.1.2',
-    'constraints' => array(
-        'depends' => array(
-            'typo3' => '7.6.0-9.5.99',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(),
-    ),
-);
+    'version' => '2.2.0',
+    'constraints' => [
+        'depends' => [
+            'typo3' => '9.5.0-10.4.99',
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
+];
