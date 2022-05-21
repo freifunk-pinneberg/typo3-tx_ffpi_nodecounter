@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-07-17T14:29:16Z" product-name="ffpi_nodecounter">
-		<header/>
+		<header />
 		<body>
 			<trans-unit id="tx_ffpinodecounter_domain_model_node">
 				<source>Node</source>
 			</trans-unit>
 			<trans-unit id="tx_ffpinodecounter_domain_model_node.nodes_online">
-                <source>Nodes Online</source>
-            </trans-unit>
+				<source>Nodes Online</source>
+			</trans-unit>
 			<trans-unit id="tx_ffpinodecounter_domain_model_node.id">
 				<source>Id</source>
 			</trans-unit>
@@ -31,8 +31,8 @@
 				<source>Clients connected</source>
 			</trans-unit>
 			<trans-unit id="tx_ffpinodecounter_domain_model_node.of">
-            	<source>from</source>
-            </trans-unit>
+				<source>from</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

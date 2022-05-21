@@ -1,24 +1,23 @@
 plugin.tx_ffpinodecounter_counter {
-    view {
-        templateRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.templateRootPath}
-        partialRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.partialRootPath}
-        layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
-    }
+  view {
+    templateRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.templateRootPath}
+    partialRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.partialRootPath}
+    layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
+  }
 }
 
 ajax_counter = PAGE
 ajax_counter {
-    typeNum = 2652017
+  typeNum = 2652017
 
-    config {
-        disableAllHeaderCode = 1
-        additionalHeaders = Content-type:application/html
-        xhtml_cleaning = 0
-        debug = 0
-        cache_period = 60
-        admPanel = 0
-    }
+  config {
+    disableAllHeaderCode = 1
+    additionalHeaders = Content-type:application/html
+    xhtml_cleaning = 0
+    debug = 0
+    cache_period = 60
+    admPanel = 0
+  }
 
-    10 < tt_content.list.20.ffpinodecounter_counter
+  10 < tt_content.list.20.ffpinodecounter_counter
 }
-

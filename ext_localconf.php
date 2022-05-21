@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
@@ -6,15 +7,15 @@ if (!defined('TYPO3_MODE')) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'FFPI.' . $_EXTKEY,
     'Counter',
-    array(
+    [
         'Node' => 'count',
 
-    ),
+    ],
     // non-cacheable actions
-    array(
+    [
         'Node' => 'count',
 
-    )
+    ]
 );
 
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result'])) {

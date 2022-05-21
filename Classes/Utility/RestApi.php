@@ -1,4 +1,5 @@
 <?php
+
 namespace FFPI\FfpiNodecounter\Utility;
 
 /***************************************************************
@@ -25,8 +26,6 @@ namespace FFPI\FfpiNodecounter\Utility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-
 class RestApi
 {
     protected $requestApiUrl;
@@ -108,7 +107,7 @@ class RestApi
 
     public function setRequestConnectTimeout($timeout = '5')
     {
-        if (is_numeric($timeout) AND $timeout >= 0) {
+        if (is_numeric($timeout) and $timeout >= 0) {
             $this->requestConnectTimeout = $timeout;
         }
     }
@@ -157,12 +156,12 @@ class RestApi
 
     public function sendRequest()
     {
-        if (!isset($this->requestApiUrl) OR $this->requestApiUrl == '') {
+        if (!isset($this->requestApiUrl) or $this->requestApiUrl == '') {
             trigger_error('no API URL', E_USER_ERROR);
             return false;
         }
 
-        if (!isset($this->requestMethod) OR $this->requestMethod == '') {
+        if (!isset($this->requestMethod) or $this->requestMethod == '') {
             $this->setRequestMethod();
         }
 
@@ -180,7 +179,7 @@ class RestApi
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         //Custom Header
-        if (isset($this->requestHeader) AND is_array($this->requestHeader)) {
+        if (isset($this->requestHeader) and is_array($this->requestHeader)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->requestHeader);
         }
 
@@ -196,7 +195,7 @@ class RestApi
         }
 
         //Daten
-        if (isset($this->requestData) AND $this->requestData != '') {
+        if (isset($this->requestData) and $this->requestData != '') {
             if ($this->requestMethod === 'post') {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $this->requestData);
             } else {

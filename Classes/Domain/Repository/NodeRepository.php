@@ -127,7 +127,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $restApi = new RestApi();
         $restApi->setRequestApiUrl($file);
         $restApi->setRequestMethod('get');
-        $requestHeader = array('Accept: application/json');
+        $requestHeader = ['Accept: application/json'];
         $restApi->setRequestHeader($requestHeader);
 
         $request = $restApi->sendRequest();
@@ -169,7 +169,8 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return string
      */
-    protected function getCacheName(): string {
+    protected function getCacheName(): string
+    {
         return crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
     }
 
@@ -178,7 +179,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     private function getJson()
     {
-        if (!isset($this->settings) OR empty($this->settings)) {
+        if (!isset($this->settings) or empty($this->settings)) {
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
 
@@ -222,7 +223,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getOnlineNodes(): array
     {
         if (empty($this->nodesOnline)) {
-            $online = array();
+            $online = [];
             foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == true) {
                     $online[] = $node;
@@ -239,7 +240,7 @@ class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function getOfflineNodes(): array
     {
         if (empty($this->nodesOffline)) {
-            $offline = array();
+            $offline = [];
             foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == false) {
                     $offline[] = $node;
