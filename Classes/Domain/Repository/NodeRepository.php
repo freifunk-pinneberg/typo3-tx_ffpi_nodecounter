@@ -73,7 +73,7 @@ class NodeRepository extends Repository
     protected $clientCount;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $settings;
 
@@ -157,9 +157,9 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return string
+     * @return int
      */
-    protected function getCacheName(): string
+    protected function getCacheName(): int
     {
         return crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
     }

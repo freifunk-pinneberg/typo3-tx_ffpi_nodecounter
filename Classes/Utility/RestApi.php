@@ -15,17 +15,22 @@ namespace FFPI\FfpiNodecounter\Utility;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 class RestApi
 {
+    /** @var string */
     protected $requestApiUrl;
+    /** @var string */
     protected $requestData;
+    /** @var array */
     protected $requestHeader;
     protected $requestMethod;
     protected $requestConnectTimeout;
 
+    /** @var string */
     protected $responseRawData;
+    /** @var string */
     protected $responseJsonData;
+    /** @var array */
     protected $responseArrayData;
     protected $responseStatusCode;
     protected $responseCurlStatus;
@@ -41,93 +46,94 @@ class RestApi
      *
      * @return boolean
      */
-    private function isJson($string)
+    private function isJson(string $string): bool
     {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public function setRequestApiUrl($requestApiUrl = 'http://localhost')
+    /**
+     * @param string $requestApiUrl
+     * @return void
+     */
+    public function setRequestApiUrl(string $requestApiUrl = 'http://localhost'): void
     {
-        return $this->requestApiUrl = $requestApiUrl;
+        $this->requestApiUrl = $requestApiUrl;
     }
 
-    public function setRequestData($dataArray)
+    /**
+     * @param array $dataArray
+     * @return void
+     */
+    public function setRequestData(array $dataArray): void
     {
-        if (!is_array($dataArray)) {
-            trigger_error('$dataArray is not an raay', E_USER_ERROR);
-            return false;
-        }
-
         $i = 0;
+        $dataString = '';
         foreach ($dataArray as $key => $value) {
-            $dataString = '';
             $tempDataString = $key . '=' . $value;
-            if ($i = 0) {
+            if ($i == 0) {
                 $dataString = $tempDataString;
             } else {
                 $dataString .= '&' . $tempDataString;
             }
             $i++;
         }
-        return $this->requestData = $dataString;
+        $this->requestData = $dataString;
     }
 
-    public function setRequestHeader($requestHeader)
+    public function setRequestHeader(array $requestHeader): void
     {
-        if (is_array($requestHeader)) {
-            return $this->requestHeader = $requestHeader;
-        } else {
-            trigger_error('Request Header could not be set', E_USER_WARNING);
-            return false;
-        }
-
+        $this->requestHeader = $requestHeader;
     }
 
     /**
      * setRequestMethod
      *
      * @param string $requestMethod 'get' oder 'post'
-     * @return boolean
+     * @return void
      */
-    public function setRequestMethod($requestMethod = 'get')
+    public function setRequestMethod(string $requestMethod = 'get'): void
     {
-        return $this->requestMethod = strtolower($requestMethod);
+        $this->requestMethod = strtolower($requestMethod);
     }
 
-    public function setRequestConnectTimeout($timeout = '5')
+    /**
+     * @param int $timeout
+     * @return void
+     */
+    public function setRequestConnectTimeout(int $timeout = 5): void
     {
-        if (is_numeric($timeout) and $timeout >= 0) {
-            $this->requestConnectTimeout = $timeout;
-        }
+        $this->requestConnectTimeout = $timeout;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRawData()
     {
         return $this->responseRawData;
     }
 
-    public function getJson()
+    /**
+     * @return string
+     */
+    public function getJson(): string
     {
         $rawData = $this->getRawData();
         if ($this->isJson($rawData)) {
             return $rawData;
         } else {
+            trigger_error('No valid json from' . $this->requestApiUrl, E_USER_WARNING);
             //@TODO: Eventuell auf andere Formate prüfen und zu json umwandeln
-            return false;
+            return '{}';
         }
     }
 
     public function getArray()
     {
         $json = $this->getJson();
-        if ($json !== false) {
-            $array = json_decode($json, true);
-            return $array;
-        } else {
-            return false;
-        }
-
+        $array = json_decode($json, true);
+        return $array;
     }
 
     public function getStatusCode()
@@ -137,11 +143,7 @@ class RestApi
 
     public function getCurlStatus()
     {
-        if (isset($this->responseCurlStatus)) {
-            return $this->responseCurlStatus;
-        } else {
-            return null;
-        }
+        return $this->responseCurlStatus ?? null;
     }
 
     public function sendRequest()
@@ -169,7 +171,7 @@ class RestApi
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         //Custom Header
-        if (isset($this->requestHeader) and is_array($this->requestHeader)) {
+        if (isset($this->requestHeader) && is_array($this->requestHeader)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->requestHeader);
         }
 
