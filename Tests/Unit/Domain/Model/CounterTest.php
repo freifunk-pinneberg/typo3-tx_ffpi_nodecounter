@@ -2,6 +2,8 @@
 
 namespace Ffpi\FfpiNodecounter\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Ffpi\FfpiNodecounter\Domain\Model\Counter;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +27,6 @@ namespace Ffpi\FfpiNodecounter\Tests\Unit\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Test case for class \Ffpi\FfpiNodecounter\Domain\Model\Counter.
  *
@@ -34,7 +35,7 @@ namespace Ffpi\FfpiNodecounter\Tests\Unit\Domain\Model;
  *
  * @author Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
  */
-class CounterTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class CounterTest extends UnitTestCase
 {
 	/**
 	 * @var \Ffpi\FfpiNodecounter\Domain\Model\Counter
@@ -43,7 +44,7 @@ class CounterTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
 	public function setUp()
 	{
-		$this->subject = new \Ffpi\FfpiNodecounter\Domain\Model\Counter();
+		$this->subject = new Counter();
 	}
 
 	public function tearDown()

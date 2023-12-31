@@ -1,5 +1,8 @@
 <?php
 namespace FFPI\FfpiNodecounter\Tests\Unit\Controller;
+
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use FFPI\FfpiNodecounter\Controller\NodeController;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,17 +26,16 @@ namespace FFPI\FfpiNodecounter\Tests\Unit\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Test case for class FFPI\FfpiNodecounter\Controller\NodeController.
  *
  * @author Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
  */
-class NodeControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class NodeControllerTest extends UnitTestCase
 {
 
 	/**
-	 * @var \FFPI\FfpiNodecounter\Controller\NodeController
+	 * @var NodeController
 	 */
 	protected $subject = NULL;
 

@@ -2,6 +2,7 @@
 
 namespace FFPI\FfpiNodecounter\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /***************************************************************
  *
  *  Copyright notice
@@ -15,11 +16,10 @@ namespace FFPI\FfpiNodecounter\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Node
  */
-class Node extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Node extends AbstractEntity
 {
 
     /**
