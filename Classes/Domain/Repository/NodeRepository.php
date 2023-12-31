@@ -2,6 +2,7 @@
 
 namespace FFPI\FfpiNodecounter\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
 use FFPI\FfpiNodecounter\Utility\RestApi;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,7 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * The repository for Nodes
  */
-class NodeRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class NodeRepository extends Repository
 {
     const CACHE_NAME = 'nodes';
 

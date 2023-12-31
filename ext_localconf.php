@@ -5,15 +5,15 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'FFPI.' . $_EXTKEY,
+    'FfpiNodecounter',
     'Counter',
     [
-        'Node' => 'count',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count',
 
     ],
     // non-cacheable actions
     [
-        'Node' => 'count',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count',
 
     ]
 );

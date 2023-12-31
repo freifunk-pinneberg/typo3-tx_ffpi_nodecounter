@@ -1,5 +1,8 @@
 <?php
 namespace Ffpi\FfpiNodecounter\Tests\Unit\Controller;
+
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Ffpi\FfpiNodecounter\Domain\Model\Counter;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,13 +26,12 @@ namespace Ffpi\FfpiNodecounter\Tests\Unit\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * Test case for class Ffpi\FfpiNodecounter\Controller\CounterController.
  *
  * @author Kevin Quiatkowski <kevin@pinneberg.freifunk.net>
  */
-class CounterControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class CounterControllerTest extends UnitTestCase
 {
 
 	/**
@@ -52,7 +54,7 @@ class CounterControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	 */
 	public function showActionAssignsTheGivenCounterToView()
 	{
-		$counter = new \Ffpi\FfpiNodecounter\Domain\Model\Counter();
+		$counter = new Counter();
 
 		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
 		$this->inject($this->subject, 'view', $view);

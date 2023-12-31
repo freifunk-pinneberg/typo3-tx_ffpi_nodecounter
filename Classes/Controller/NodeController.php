@@ -2,6 +2,8 @@
 
 namespace FFPI\FfpiNodecounter\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use FFPI\FfpiNodecounter\Domain\Repository\NodeRepository;
 /***************************************************************
  *
  *  Copyright notice
@@ -26,25 +28,23 @@ namespace FFPI\FfpiNodecounter\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * NodeController
  */
-class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class NodeController extends ActionController
 {
 
     /**
      * nodeRepository
      *
-     * @var \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository
-     *
+     * @var NodeRepository
      */
     protected $nodeRepository;
 
     /**
-     * @param \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository
+     * @param NodeRepository $nodeRepository
      */
-    public function injectNodeRepository(\FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository)
+    public function injectNodeRepository(NodeRepository $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
     }

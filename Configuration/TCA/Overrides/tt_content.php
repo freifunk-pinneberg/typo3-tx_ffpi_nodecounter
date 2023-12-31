@@ -1,7 +1,7 @@
 <?php
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'FFPI.' . 'ffpi_nodecounter',
+    'FfpiNodecounter',
     'Counter',
     'counter'
 );
