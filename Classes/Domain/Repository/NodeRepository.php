@@ -182,7 +182,7 @@ class NodeRepository extends Repository
         if (!is_array($cachedData) || $age > 90) {
             //Cache leer order abgelaufen.
             $apiData = $this->getNodesFromApi();
-            if (is_array($apiData)) {
+            if (is_array($apiData) && !empty($apiData)) {
                 $this->saveNodesCache($apiData);
                 $this->setNodes($apiData['nodes']);
             } elseif (is_array($cachedData)) {

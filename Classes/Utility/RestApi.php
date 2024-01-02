@@ -120,7 +120,7 @@ class RestApi
     public function getJson(): string
     {
         $rawData = $this->getRawData();
-        if ($this->isJson($rawData)) {
+        if (is_string($rawData) && $this->isJson($rawData)) {
             return $rawData;
         } else {
             trigger_error('No valid json from' . $this->requestApiUrl, E_USER_WARNING);
@@ -158,6 +158,9 @@ class RestApi
         }
 
         $curl = curl_init($this->requestApiUrl);
+        if($curl === false){
+            trigger_error('Could not initalize curl with url ' . $this->requestApiUrl, E_USER_ERROR);
+        }
         //Im Erfolgsfall nicht TRUE sondern Daten zurückliefern
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
