@@ -8,7 +8,20 @@ if (!defined('TYPO3_MODE')) {
     'FfpiNodecounter',
     'Counter',
     [
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,cachedCount',
+
+    ],
+    // non-cacheable actions
+    [
         \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count',
+
+    ]
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'FfpiNodecounter',
+    'CachedCounter',
+    [
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'cachedCount,count',
 
     ],
     // non-cacheable actions

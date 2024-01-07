@@ -5,6 +5,13 @@ plugin.tx_ffpinodecounter_counter {
     layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
   }
 }
+plugin.tx_ffpinodecounter_cachedcounter {
+  view {
+    templateRootPaths.0 = {$plugin.tx_ffpinodecounter_cachedcounter.view.templateRootPath}
+    partialRootPaths.0 = {$plugin.tx_ffpinodecounter_cachedcounter.view.partialRootPath}
+    layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_cachedcounter.view.layoutRootPath}
+  }
+}
 
 ajax_counter = PAGE
 ajax_counter {

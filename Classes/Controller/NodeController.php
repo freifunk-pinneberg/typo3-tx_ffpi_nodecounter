@@ -58,4 +58,9 @@ class NodeController extends ActionController
 
     }
 
+    public function cachedCountAction()
+    {
+        $this->countAction();
+    }
+
 }
