@@ -5,6 +5,7 @@ plugin.tx_ffpinodecounter_counter {
     layoutRootPaths.0 = {$plugin.tx_ffpinodecounter_counter.view.layoutRootPath}
   }
 }
+
 plugin.tx_ffpinodecounter_cachedcounter {
   view {
     templateRootPaths.0 = {$plugin.tx_ffpinodecounter_cachedcounter.view.templateRootPath}
@@ -19,11 +20,16 @@ ajax_counter {
 
   config {
     disableAllHeaderCode = 1
-    additionalHeaders = Content-type:application/html
     xhtml_cleaning = 0
     debug = 0
     cache_period = 60
     admPanel = 0
+    additionalHeaders {
+      10.header = Content-type:text/html
+      20.header = Access-Control-Allow-Origin:*
+      30.header = Cache-Control:public, max-age=60, stale-while-revalidate=86400
+      30.replace = 1
+    }
   }
 
   10 < tt_content.list.20.ffpinodecounter_counter
