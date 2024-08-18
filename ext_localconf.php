@@ -8,12 +8,25 @@ if (!defined('TYPO3_MODE')) {
     'FfpiNodecounter',
     'Counter',
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,cachedCount',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,cachedCount,jsonCount',
 
     ],
     // non-cacheable actions
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,jsonCount',
+
+    ]
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'FfpiNodecounter',
+    'JsonCounter',
+    [
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'jsonCount',
+
+    ],
+    // non-cacheable actions
+    [
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'jsonCount',
 
     ]
 );
@@ -21,12 +34,12 @@ if (!defined('TYPO3_MODE')) {
     'FfpiNodecounter',
     'CachedCounter',
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'cachedCount,count',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'cachedCount,count,jsonCount',
 
     ],
     // non-cacheable actions
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count',
+        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,jsonCount',
 
     ]
 );

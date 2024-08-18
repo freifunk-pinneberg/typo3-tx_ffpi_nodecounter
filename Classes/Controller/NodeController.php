@@ -4,6 +4,8 @@ namespace FFPI\FfpiNodecounter\Controller;
 
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FFPI\FfpiNodecounter\Domain\Repository\NodeRepository;
+use TYPO3\CMS\Extbase\Mvc\View\JsonView;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -61,6 +63,26 @@ class NodeController extends ActionController
     public function cachedCountAction()
     {
         $this->countAction();
+    }
+
+    public function initializeJsonCountAction()
+    {
+        $this->defaultViewObjectName = JsonView::class;
+    }
+
+    public function jsonCountAction()
+    {
+        $this->nodeRepository->setSettings($this->settings);
+
+        //Get Counter data
+        $counter['total'] = $this->nodeRepository->getNodesAllCount();
+        $counter['offline'] = $this->nodeRepository->getNodesOfflineCount();
+        $counter['online'] = $this->nodeRepository->getNodesOnlineCount();
+        $counter['clients'] = $this->nodeRepository->getClientCount();
+
+        //Assign counter to view
+        $this->view->setVariablesToRender(['total', 'offline', 'online', 'clients']);
+        $this->view->assignMultiple($counter);
     }
 
 }

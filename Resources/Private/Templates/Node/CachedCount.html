@@ -6,12 +6,12 @@
 
 <f:section name="main">
     <div class="node-stats" id="ffpi-nodecounter">
-        <div class="node-counter">{counter.online}
+        <div class="node-counter"><span class="node-counter--online">{counter.online}</span>
             <f:translate key="tx_ffpinodecounter_domain_model_node.of"/>
-            {counter.total}
+            <span class="node-counter--total">{counter.total}</span>
             <f:translate key="tx_ffpinodecounter_domain_model_node.nodes_online"/>
         </div>
-        <div class="client-counter">{counter.clients}
+        <div class="client-counter"><span class="node-counter--clients">{counter.clients}</span>
             <f:translate key="tx_ffpinodecounter_domain_model_node.clients_online"/>
         </div>
     </div>
