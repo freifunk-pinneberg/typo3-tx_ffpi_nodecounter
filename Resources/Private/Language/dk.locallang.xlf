@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="dk" datatype="plaintext" original="messages" date="2023-12-19T11:66:36Z" product-name="ffpi_nodecounter">
+		<header />
+		<body>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node">
+				<target>Knots</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.nodes_online">
+				<target>Knots Online</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.id">
+				<target>Id</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.hostname">
+				<target>Hostname</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.role">
+				<target>Rolle</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.online">
+				<target>Online</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.gateway">
+				<target>Gateway</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients">
+				<target>Klienter</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.clients_online">
+				<target>Tilsluttede klienter</target>
+			</trans-unit>
+			<trans-unit id="tx_ffpinodecounter_domain_model_node.of">
+				<target>af</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

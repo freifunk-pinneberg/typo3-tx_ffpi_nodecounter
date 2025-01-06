@@ -15,19 +15,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  *  All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *  You may use, distribute and modify this code under the
+ *  terms of the GNU General Public License Version 3
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
@@ -84,7 +73,7 @@ class NodeRepository extends Repository
     protected $clientCount;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $settings;
 
@@ -168,9 +157,9 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return string
+     * @return int
      */
-    protected function getCacheName(): string
+    protected function getCacheName(): int
     {
         return crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
     }
@@ -193,7 +182,7 @@ class NodeRepository extends Repository
         if (!is_array($cachedData) || $age > 90) {
             //Cache leer order abgelaufen.
             $apiData = $this->getNodesFromApi();
-            if (is_array($apiData)) {
+            if (is_array($apiData) && !empty($apiData)) {
                 $this->saveNodesCache($apiData);
                 $this->setNodes($apiData['nodes']);
             } elseif (is_array($cachedData)) {
