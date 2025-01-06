@@ -25,7 +25,7 @@ ajax_counter {
     cache_period = 60
     admPanel = 0
     additionalHeaders {
-      10.header = Content-type:text/html
+      10.header = Content-type:application/json
       20.header = Access-Control-Allow-Origin:*
       30.header = Cache-Control:public, max-age=60, stale-while-revalidate=86400
       30.replace = 1
