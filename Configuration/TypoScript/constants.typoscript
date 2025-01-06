@@ -8,3 +8,4 @@ plugin.tx_ffpinodecounter_counter {
     layoutRootPath = EXT:ffpi_nodecounter/Resources/Private/Layouts/
   }
 }
+plugin.tx_ffpinodecounter_cachedcounter.view < plugin.tx_ffpinodecounter_counter.view

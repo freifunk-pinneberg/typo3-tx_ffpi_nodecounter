@@ -2,6 +2,10 @@
 
 namespace FFPI\FfpiNodecounter\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use FFPI\FfpiNodecounter\Domain\Repository\NodeRepository;
+use TYPO3\CMS\Extbase\Mvc\View\JsonView;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -10,41 +14,28 @@ namespace FFPI\FfpiNodecounter\Controller;
  *
  *  All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *  You may use, distribute and modify this code under the
+ *  terms of the GNU General Public License Version 3
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
  * NodeController
  */
-class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class NodeController extends ActionController
 {
 
     /**
      * nodeRepository
      *
-     * @var \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository
-     *
+     * @var NodeRepository
      */
     protected $nodeRepository;
 
     /**
-     * @param \FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository
+     * @param NodeRepository $nodeRepository
      */
-    public function injectNodeRepository(\FFPI\FfpiNodecounter\Domain\Repository\NodeRepository $nodeRepository)
+    public function injectNodeRepository(NodeRepository $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
     }
@@ -67,6 +58,31 @@ class NodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         //Assign counter to view
         $this->view->assign('counter', $counter);
 
+    }
+
+    public function cachedCountAction()
+    {
+        $this->countAction();
+    }
+
+    public function initializeJsonCountAction()
+    {
+        $this->defaultViewObjectName = JsonView::class;
+    }
+
+    public function jsonCountAction()
+    {
+        $this->nodeRepository->setSettings($this->settings);
+
+        //Get Counter data
+        $counter['total'] = $this->nodeRepository->getNodesAllCount();
+        $counter['offline'] = $this->nodeRepository->getNodesOfflineCount();
+        $counter['online'] = $this->nodeRepository->getNodesOnlineCount();
+        $counter['clients'] = $this->nodeRepository->getClientCount();
+
+        //Assign counter to view
+        $this->view->setVariablesToRender(['total', 'offline', 'online', 'clients']);
+        $this->view->assignMultiple($counter);
     }
 
 }
