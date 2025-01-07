@@ -2,6 +2,7 @@
 
 namespace FFPI\FfpiNodecounter\Domain\Repository;
 
+use FFPI\FfpiNodecounter\Domain\Model\Node;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use FFPI\FfpiNodecounter\Utility\RestApi;
 use TYPO3\CMS\Core\Cache\CacheManager;
@@ -23,6 +24,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * The repository for Nodes
+ * @extends Repository<Node>
  */
 class NodeRepository extends Repository
 {
@@ -30,17 +32,17 @@ class NodeRepository extends Repository
 
     //Data
     /**
-     * @var array $nodes stores all nodes
+     * @var array<mixed> $nodes stores all nodes
      */
     protected $nodes = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $nodesOnline = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $nodesOffline = [];
 
@@ -49,48 +51,48 @@ class NodeRepository extends Repository
      *
      * @var int
      */
-    protected $nodesAllCount;
+    protected $nodesAllCount = 0;
 
     /**
      * nodesOnlineCount
      *
      * @var int
      */
-    protected $nodesOnlineCount;
+    protected $nodesOnlineCount = 0;
 
     /**
      * nodesOfflineCount
      *
      * @var int
      */
-    protected $nodesOfflineCount;
+    protected $nodesOfflineCount = 0;
 
     /**
      * clientCount
      *
      * @var int
      */
-    protected $clientCount;
+    protected $clientCount = 0;
 
     /**
-     * @var array|null
+     * @var array<mixed>|null
      */
     protected $settings;
 
 
     /**
-     * @param $settings
+     * @param array<mixed> $settings
      * @return void
      */
-    public function setSettings($settings)
+    public function setSettings(array $settings): void
     {
         $this->settings = $settings;
     }
 
     /**
-     * @return mixed
+     * @return array<mixed>
      */
-    private function getNodes()
+    private function getNodes(): array
     {
         //get remote data if local empty
         if (empty($this->nodes)) {
@@ -100,38 +102,52 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @param mixed $nodes
+     * @param array<mixed> $nodes
      */
-    private function setNodes($nodes)
+    private function setNodes($nodes): void
     {
         $this->nodes = $nodes;
     }
 
     /**
-     * @return array|null
+     * @return array<mixed>
      */
-    private function getNodesFromApi(): ?array
+    private function getNodesFromApi(): array
     {
         $file = $this->settings['nodeListFile'];
-        $external = $this->settings['nodeListExternal']; //@todo get only external via RestAPI
-        $restApi = new RestApi();
-        $restApi->setRequestApiUrl($file);
-        $restApi->setRequestMethod('get');
-        $requestHeader = ['Accept: application/json'];
-        $restApi->setRequestHeader($requestHeader);
+        $external = $this->settings['nodeListExternal'];
 
-        $request = $restApi->sendRequest();
+        if (!$external) {
+            // Verwende fopen, wenn external auf false gesetzt ist
+            if (!file_exists($file) || !is_readable($file)) {
+                throw new \RuntimeException('The local nodelist file is not readable or dosen\'t exists: ' . $file);
+            }
 
-        $data = $restApi->getArray();
-        if (is_array($data)) {
-            return $data;
+            $fileContent = file_get_contents($file);
+            if ($fileContent) {
+                $data = json_decode($fileContent, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg());
+                }
+            } else {
+                throw new \RuntimeException('Something went wrong reading the file: ' . $file);
+            }
+
         } else {
-            return null;
+            $restApi = new RestApi();
+            $restApi->setRequestApiUrl($file);
+            $restApi->setRequestMethod('get');
+            $requestHeader = ['Accept: application/json'];
+            $restApi->setRequestHeader($requestHeader);
+
+            $request = $restApi->sendRequest();
+            $data = $restApi->getArray();
         }
+        return $data;
     }
 
     /**
-     * @return array|null
+     * @return array<mixed>|null
      */
     private function getCachedNodes(): ?array
     {
@@ -147,7 +163,7 @@ class NodeRepository extends Repository
     /**
      * @param array $nodes
      */
-    private function saveNodesCache(array $nodes)
+    private function saveNodesCache(array $nodes): void
     {
         $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
 
@@ -157,17 +173,17 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return int
+     * @return string
      */
-    protected function getCacheName(): int
+    protected function getCacheName(): string
     {
-        return crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
+        return (string) crc32(self::CACHE_NAME . $this->settings['nodeListFile']);
     }
 
     /**
      * @return void
      */
-    private function getJson()
+    private function getJson(): void
     {
         if (!isset($this->settings) or empty($this->settings)) {
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
@@ -196,9 +212,9 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    public function getAllNodes()
+    public function getAllNodes(): array
     {
         $data = $this->getNodes();
         if (!$data) {
@@ -208,7 +224,7 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOnlineNodes(): array
     {
@@ -225,7 +241,7 @@ class NodeRepository extends Repository
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOfflineNodes(): array
     {
@@ -244,13 +260,13 @@ class NodeRepository extends Repository
     /**
      * @return int
      */
-    public function getClientCount()
+    public function getClientCount(): int
     {
         if (empty($this->clientCount)) {
             $count = 0;
             $nodes = $this->getOnlineNodes();
             foreach ($nodes as $node) {
-                $count = $count + $node['statistics']['clients'];
+                $count = $count + (int) $node['statistics']['clients'];
             }
             $this->clientCount = $count;
         }
@@ -260,7 +276,7 @@ class NodeRepository extends Repository
     /**
      * @return int
      */
-    public function getNodesOnlineCount()
+    public function getNodesOnlineCount(): int
     {
         if (empty($this->nodesOnlineCount)) {
             $onlineCount = count($this->getOnlineNodes());
@@ -284,7 +300,7 @@ class NodeRepository extends Repository
     /**
      * @return int
      */
-    public function getNodesAllCount()
+    public function getNodesAllCount(): int
     {
         if (empty($this->nodesAllCount)) {
             $allCount = count($this->getAllNodes());

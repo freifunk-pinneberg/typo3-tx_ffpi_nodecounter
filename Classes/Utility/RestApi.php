@@ -19,20 +19,32 @@ class RestApi
 {
     /** @var string */
     protected $requestApiUrl;
+
     /** @var string */
     protected $requestData;
-    /** @var array */
+
+    /** @var array<string> */
     protected $requestHeader;
+
+    /** @var string */
     protected $requestMethod;
+
+    /** @var int */
     protected $requestConnectTimeout;
 
     /** @var string */
     protected $responseRawData;
+
     /** @var string */
     protected $responseJsonData;
-    /** @var array */
+
+    /** @var array<mixed> */
     protected $responseArrayData;
+
+    /** @var int|null */
     protected $responseStatusCode;
+
+    /** @var int|null */
     protected $responseCurlStatus;
 
     public function __construct()
@@ -129,56 +141,71 @@ class RestApi
         }
     }
 
-    public function getArray()
+    /**
+     * @return array<mixed>
+     */
+    public function getArray(): array
     {
         $json = $this->getJson();
         $array = json_decode($json, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg());
+        }
         return $array;
     }
 
+    /**
+     * @return mixed
+     */
     public function getStatusCode()
     {
         return $this->responseStatusCode;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCurlStatus()
     {
         return $this->responseCurlStatus ?? null;
     }
 
-    public function sendRequest()
+    /**
+     * @return bool
+     */
+    public function sendRequest(): bool
     {
-        if (!isset($this->requestApiUrl) or $this->requestApiUrl == '') {
-            trigger_error('no API URL', E_USER_ERROR);
-            return false;
+        if (empty($this->requestApiUrl)) {
+            trigger_error('no API URL, make sure you set one in plugin.tx_ffpinodecounter.settings.nodeListFile', E_USER_ERROR);
         }
 
-        if (!isset($this->requestMethod) or $this->requestMethod == '') {
+        if (empty($this->requestMethod)) {
             $this->setRequestMethod();
         }
 
         $curl = curl_init($this->requestApiUrl);
         if($curl === false){
-            trigger_error('Could not initalize curl with url ' . $this->requestApiUrl, E_USER_ERROR);
+            trigger_error('Could not initialize curl with url ' . $this->requestApiUrl, E_USER_ERROR);
         }
-        //Im Erfolgsfall nicht TRUE sondern Daten zurückliefern
+        //In case of success, get the actual data and not just true
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        //Useragent
-        curl_setopt($curl, CURLOPT_USERAGENT, 'TYPO3 at ' . $_SERVER['HTTP_HOST']);
+        //We want to set a User-Agent
+        $host = preg_replace('/[^a-zA-Z0-9.-]/', '', $_SERVER['HTTP_HOST']);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'TYPO3 at ' . $host);
 
         //Timeout
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->requestConnectTimeout);
 
-        //301 und 302 folgen
+        //Follow 301 and 302 redirects
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         //Custom Header
-        if (isset($this->requestHeader) && is_array($this->requestHeader)) {
+        if (!empty($this->requestHeader)) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->requestHeader);
         }
 
-        //Sende Methode
+        //set request method
         if ($this->requestMethod === 'post') {
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_HTTPGET, false);
@@ -186,19 +213,19 @@ class RestApi
             curl_setopt($curl, CURLOPT_POST, false);
             curl_setopt($curl, CURLOPT_HTTPGET, true);
         } else {
-            trigger_error('keine gültige Request Methode gefunden', E_USER_ERROR);
+            trigger_error('No valid request method found', E_USER_ERROR);
         }
 
-        //Daten
-        if (isset($this->requestData) and $this->requestData != '') {
+        //If we have to attach some data
+        if (!empty($this->requestData)) {
             if ($this->requestMethod === 'post') {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $this->requestData);
             } else {
                 curl_setopt($curl, CURLOPT_URL, $this->requestApiUrl . '?' . $this->requestData);
             }
-
         }
 
+        /** @var string|false $curl_response can't be true as we set CURLOPT_RETURNTRANSFER earlier */
         $curl_response = curl_exec($curl);
 
         $this->responseStatusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);

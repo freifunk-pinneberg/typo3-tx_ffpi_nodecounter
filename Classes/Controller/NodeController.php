@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Mvc\View\JsonView;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 /**
  * NodeController
  */
@@ -35,7 +36,7 @@ class NodeController extends ActionController
     /**
      * @param NodeRepository $nodeRepository
      */
-    public function injectNodeRepository(NodeRepository $nodeRepository)
+    public function injectNodeRepository(NodeRepository $nodeRepository): void
     {
         $this->nodeRepository = $nodeRepository;
     }
@@ -45,7 +46,7 @@ class NodeController extends ActionController
      *
      * @return void
      */
-    public function countAction()
+    public function countAction(): void
     {
         $this->nodeRepository->setSettings($this->settings);
 
@@ -60,12 +61,12 @@ class NodeController extends ActionController
 
     }
 
-    public function cachedCountAction()
+    public function cachedCountAction(): void
     {
         $this->countAction();
     }
 
-    public function initializeJsonCountAction()
+    public function initializeJsonCountAction(): void
     {
         $this->defaultViewObjectName = JsonView::class;
     }
@@ -81,6 +82,9 @@ class NodeController extends ActionController
         $counter['clients'] = $this->nodeRepository->getClientCount();
 
         //Assign counter to view
+        if (!$this->view instanceof JsonView) {
+            throw new \RuntimeException('Expected '. JsonView::class . ', got ' . get_class($this->view));
+        }
         $this->view->setVariablesToRender(['total', 'offline', 'online', 'clients']);
         $this->view->assignMultiple($counter);
     }
