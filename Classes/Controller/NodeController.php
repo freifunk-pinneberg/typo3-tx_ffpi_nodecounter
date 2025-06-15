@@ -71,7 +71,7 @@ class NodeController extends ActionController
         $this->defaultViewObjectName = JsonView::class;
     }
 
-    public function jsonCountAction()
+    public function jsonCountAction(): void
     {
         $this->nodeRepository->setSettings($this->settings);
 
