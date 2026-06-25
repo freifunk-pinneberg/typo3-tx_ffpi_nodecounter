@@ -2,9 +2,9 @@
 
 namespace FFPI\FfpiNodecounter\Controller;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FFPI\FfpiNodecounter\Domain\Repository\NodeRepository;
-use TYPO3\CMS\Extbase\Mvc\View\JsonView;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /***************************************************************
  *
@@ -25,68 +25,40 @@ use TYPO3\CMS\Extbase\Mvc\View\JsonView;
  */
 class NodeController extends ActionController
 {
+    public function __construct(
+        protected readonly NodeRepository $nodeRepository,
+    ) {
+    }
 
-    /**
-     * nodeRepository
-     *
-     * @var NodeRepository
-     */
-    protected $nodeRepository;
-
-    /**
-     * @param NodeRepository $nodeRepository
-     */
-    public function injectNodeRepository(NodeRepository $nodeRepository): void
+    public function countAction(): ResponseInterface
     {
-        $this->nodeRepository = $nodeRepository;
+        $this->view->assign('counter', $this->buildCounter());
+
+        return $this->htmlResponse();
+    }
+
+    public function cachedCountAction(): ResponseInterface
+    {
+        return $this->countAction();
+    }
+
+    public function jsonCountAction(): ResponseInterface
+    {
+        return $this->jsonResponse((string)json_encode($this->buildCounter(), JSON_THROW_ON_ERROR));
     }
 
     /**
-     * action count
-     *
-     * @return void
+     * @return array{total: int, offline: int, online: int, clients: int}
      */
-    public function countAction(): void
+    private function buildCounter(): array
     {
         $this->nodeRepository->setSettings($this->settings);
 
-        //Get Counter data
-        $counter['total'] = $this->nodeRepository->getNodesAllCount();
-        $counter['offline'] = $this->nodeRepository->getNodesOfflineCount();
-        $counter['online'] = $this->nodeRepository->getNodesOnlineCount();
-        $counter['clients'] = $this->nodeRepository->getClientCount();
-
-        //Assign counter to view
-        $this->view->assign('counter', $counter);
-
+        return [
+            'total' => $this->nodeRepository->getNodesAllCount(),
+            'offline' => $this->nodeRepository->getNodesOfflineCount(),
+            'online' => $this->nodeRepository->getNodesOnlineCount(),
+            'clients' => $this->nodeRepository->getClientCount(),
+        ];
     }
-
-    public function cachedCountAction(): void
-    {
-        $this->countAction();
-    }
-
-    public function initializeJsonCountAction(): void
-    {
-        $this->defaultViewObjectName = JsonView::class;
-    }
-
-    public function jsonCountAction(): void
-    {
-        $this->nodeRepository->setSettings($this->settings);
-
-        //Get Counter data
-        $counter['total'] = $this->nodeRepository->getNodesAllCount();
-        $counter['offline'] = $this->nodeRepository->getNodesOfflineCount();
-        $counter['online'] = $this->nodeRepository->getNodesOnlineCount();
-        $counter['clients'] = $this->nodeRepository->getClientCount();
-
-        //Assign counter to view
-        if (!$this->view instanceof JsonView) {
-            throw new \RuntimeException('Expected '. JsonView::class . ', got ' . get_class($this->view));
-        }
-        $this->view->setVariablesToRender(['total', 'offline', 'online', 'clients']);
-        $this->view->assignMultiple($counter);
-    }
-
 }

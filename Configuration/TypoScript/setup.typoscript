@@ -32,9 +32,8 @@ ajax_counter {
     }
   }
 
-  10 = USER
+  10 = EXTBASEPLUGIN
   10 {
-    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     extensionName = FfpiNodecounter
     pluginName = JsonCounter
     vendorName = FFPI
