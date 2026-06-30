@@ -1,12 +1,21 @@
 <?php
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+declare(strict_types=1);
+
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+ExtensionUtility::registerPlugin(
     'FfpiNodecounter',
     'Counter',
-    'counter'
+    'counter',
+    null,
+    'list'
 );
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+
+ExtensionUtility::registerPlugin(
     'FfpiNodecounter',
     'CachedCounter',
-    'counter (cached)'
+    'counter (cached)',
+    null,
+    'list'
 );

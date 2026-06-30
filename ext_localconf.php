@@ -1,50 +1,59 @@
 <?php
 
-defined('TYPO3') or die('Access denied.');
+declare(strict_types=1);
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use FFPI\FfpiNodecounter\Controller\NodeController;
+use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
+
+defined('TYPO3') || die('Access denied.');
+
+ExtensionUtility::configurePlugin(
     'FfpiNodecounter',
     'Counter',
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,cachedCount,jsonCount',
+        NodeController::class => 'count,cachedCount,jsonCount',
 
     ],
     // non-cacheable actions
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,jsonCount',
+        NodeController::class => 'count,jsonCount',
 
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'FfpiNodecounter',
     'JsonCounter',
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'jsonCount',
+        NodeController::class => 'jsonCount',
 
     ],
     // non-cacheable actions
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'jsonCount',
+        NodeController::class => 'jsonCount',
 
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'FfpiNodecounter',
     'CachedCounter',
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'cachedCount,count,jsonCount',
+        NodeController::class => 'cachedCount,count,jsonCount',
 
     ],
     // non-cacheable actions
     [
-        \FFPI\FfpiNodecounter\Controller\NodeController::class => 'count,jsonCount',
+        NodeController::class => 'count,jsonCount',
 
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result']) || !is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result'])) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result'] = [];
 }
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result']['backend'])) {
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result']['backend'] = \TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['ffpi_nodecounter_result']['backend'] = Typo3DatabaseBackend::class;
 }

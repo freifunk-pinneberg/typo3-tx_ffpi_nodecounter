@@ -61,7 +61,7 @@ class RestApi
     private function isJson(string $string): bool
     {
         json_decode($string);
-        return (json_last_error() == JSON_ERROR_NONE);
+        return (json_last_error() === JSON_ERROR_NONE);
     }
 
     /**
@@ -83,7 +83,7 @@ class RestApi
         $dataString = '';
         foreach ($dataArray as $key => $value) {
             $tempDataString = $key . '=' . $value;
-            if ($i == 0) {
+            if ($i === 0) {
                 $dataString = $tempDataString;
             } else {
                 $dataString .= '&' . $tempDataString;
@@ -149,7 +149,7 @@ class RestApi
         $json = $this->getJson();
         $array = json_decode($json, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg());
+            throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg(), 7154847854);
         }
         return $array;
     }
@@ -191,7 +191,7 @@ class RestApi
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         //We want to set a User-Agent
-        $host = preg_replace('/[^a-zA-Z0-9.-]/', '', $_SERVER['HTTP_HOST']);
+        $host = preg_replace('/[^a-zA-Z0-9.-]/', '', (string) $_SERVER['HTTP_HOST']);
         curl_setopt($curl, CURLOPT_USERAGENT, 'TYPO3 at ' . $host);
 
         //Timeout
@@ -234,7 +234,7 @@ class RestApi
                 E_USER_NOTICE);
         }
 
-        if ($errno = curl_errno($curl)) {
+        if (($errno = curl_errno($curl)) !== 0) {
             trigger_error("cURL error ({$errno}):\n ", E_USER_WARNING);
             $this->responseCurlStatus = $errno;
         }

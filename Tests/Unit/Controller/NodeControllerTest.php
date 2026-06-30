@@ -39,12 +39,12 @@ class NodeControllerTest extends UnitTestCase
 	 */
 	protected $subject = NULL;
 
-	public function setUp()
+	public function setUp(): void
 	{
-		$this->subject = $this->getMock('FFPI\\FfpiNodecounter\\Controller\\NodeController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+		$this->subject = $this->getMock(NodeController::class, ['redirect', 'forward', 'addFlashMessage'], [], '', FALSE);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		unset($this->subject);
 	}

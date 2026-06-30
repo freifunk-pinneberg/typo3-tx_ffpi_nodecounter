@@ -39,12 +39,12 @@ class CounterControllerTest extends UnitTestCase
 	 */
 	protected $subject = NULL;
 
-	public function setUp()
+	public function setUp(): void
 	{
-		$this->subject = $this->getMock('Ffpi\\FfpiNodecounter\\Controller\\CounterController', array('redirect', 'forward', 'addFlashMessage'), array(), '', FALSE);
+		$this->subject = $this->getMock('Ffpi\\FfpiNodecounter\\Controller\\CounterController', ['redirect', 'forward', 'addFlashMessage'], [], '', FALSE);
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		unset($this->subject);
 	}
@@ -52,7 +52,7 @@ class CounterControllerTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function showActionAssignsTheGivenCounterToView()
+	public function showActionAssignsTheGivenCounterToView(): void
 	{
 		$counter = new Counter();
 

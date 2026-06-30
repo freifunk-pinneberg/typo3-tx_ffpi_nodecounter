@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FFPI\FfpiNodecounter\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -80,7 +82,7 @@ class Node extends AbstractEntity
      * @param string $id
      * @return void
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -101,7 +103,7 @@ class Node extends AbstractEntity
      * @param string $hostname
      * @return void
      */
-    public function setHostname($hostname)
+    public function setHostname($hostname): void
     {
         $this->hostname = $hostname;
     }
@@ -122,7 +124,7 @@ class Node extends AbstractEntity
      * @param string $role
      * @return void
      */
-    public function setRole($role)
+    public function setRole($role): void
     {
         $this->role = $role;
     }
@@ -143,7 +145,7 @@ class Node extends AbstractEntity
      * @param bool $online
      * @return void
      */
-    public function setOnline($online)
+    public function setOnline($online): void
     {
         $this->online = $online;
     }
@@ -174,7 +176,7 @@ class Node extends AbstractEntity
      * @param string $gateway
      * @return void
      */
-    public function setGateway($gateway)
+    public function setGateway($gateway): void
     {
         $this->gateway = $gateway;
     }
@@ -195,7 +197,7 @@ class Node extends AbstractEntity
      * @param int $clients
      * @return void
      */
-    public function setClients($clients)
+    public function setClients($clients): void
     {
         $this->clients = $clients;
     }

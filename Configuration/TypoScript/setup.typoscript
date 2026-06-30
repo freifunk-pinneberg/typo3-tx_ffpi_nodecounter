@@ -14,6 +14,20 @@ plugin.tx_ffpinodecounter_cachedcounter {
   }
 }
 
+tt_content.ffpinodecounter_counter = USER
+tt_content.ffpinodecounter_counter {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = FfpiNodecounter
+    pluginName = Counter
+}
+
+tt_content.ffpinodecounter_cachedcounter = USER
+tt_content.ffpinodecounter_cachedcounter {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = FfpiNodecounter
+    pluginName = CachedCounter
+}
+
 ajax_counter = PAGE
 ajax_counter {
   typeNum = 2652017
@@ -32,12 +46,10 @@ ajax_counter {
     }
   }
 
-  10 = EXTBASEPLUGIN
+  10 = USER
   10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     extensionName = FfpiNodecounter
     pluginName = JsonCounter
-    vendorName = FFPI
-    controller = Node
-
   }
 }

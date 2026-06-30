@@ -42,12 +42,12 @@ class CounterTest extends UnitTestCase
 	 */
 	protected $subject = NULL;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$this->subject = new Counter();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		unset($this->subject);
 	}
@@ -55,7 +55,7 @@ class CounterTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function dummyTestToNotLeaveThisFileEmpty()
+	public function dummyTestToNotLeaveThisFileEmpty(): void
 	{
 		$this->markTestIncomplete();
 	}

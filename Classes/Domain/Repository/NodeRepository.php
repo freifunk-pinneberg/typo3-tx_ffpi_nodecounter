@@ -6,7 +6,6 @@ use FFPI\FfpiNodecounter\Domain\Model\Node;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use FFPI\FfpiNodecounter\Utility\RestApi;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***************************************************************
  *
@@ -78,6 +77,13 @@ class NodeRepository extends Repository
      * @var array<mixed>|null
      */
     protected $settings;
+    /**
+     * Constructs a new Repository
+     */
+    public function __construct(private readonly CacheManager $cacheManager)
+    {
+        parent::__construct();
+    }
 
 
     /**
@@ -120,17 +126,17 @@ class NodeRepository extends Repository
         if (!$external) {
             // Verwende fopen, wenn external auf false gesetzt ist
             if (!file_exists($file) || !is_readable($file)) {
-                throw new \RuntimeException('The local nodelist file is not readable or dosen\'t exists: ' . $file);
+                throw new \RuntimeException('The local nodelist file is not readable or dosen\'t exists: ' . $file, 4073928460);
             }
 
             $fileContent = file_get_contents($file);
             if ($fileContent) {
                 $data = json_decode($fileContent, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
-                    throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg());
+                    throw new \RuntimeException('Error while decoding the json: ' . json_last_error_msg(), 5244104269);
                 }
             } else {
-                throw new \RuntimeException('Something went wrong reading the file: ' . $file);
+                throw new \RuntimeException('Something went wrong reading the file: ' . $file, 8168141004);
             }
 
         } else {
@@ -151,9 +157,9 @@ class NodeRepository extends Repository
      */
     private function getCachedNodes(): ?array
     {
-        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
+        $frontend = $this->cacheManager->getCache('ffpi_nodecounter_result');
 
-        $entry = $cache->get($this->getCacheName());
+        $entry = $frontend->get($this->getCacheName());
         if (!is_array($entry)) {
             return null;
         }
@@ -165,11 +171,11 @@ class NodeRepository extends Repository
      */
     private function saveNodesCache(array $nodes): void
     {
-        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('ffpi_nodecounter_result');
+        $frontend = $this->cacheManager->getCache('ffpi_nodecounter_result');
 
         $nodes['cacheTime'] = time();
         // Save value in cache
-        $cache->set($this->getCacheName(), $nodes, [], 0);
+        $frontend->set($this->getCacheName(), $nodes, [], 0);
     }
 
     /**
@@ -185,7 +191,7 @@ class NodeRepository extends Repository
      */
     private function getJson(): void
     {
-        if (!isset($this->settings) or empty($this->settings)) {
+        if ($this->settings === null || empty($this->settings)) {
             throw new \RuntimeException('No Plugin Settings available', 1469348181);
         }
 
@@ -193,12 +199,12 @@ class NodeRepository extends Repository
         $age = time();
         if (is_array($cachedData)) {
             $cachedTime = $cachedData['cacheTime'];
-            $age = $age - $cachedTime;
+            $age -= $cachedTime;
         }
         if (!is_array($cachedData) || $age > 90) {
             //Cache leer order abgelaufen.
             $apiData = $this->getNodesFromApi();
-            if (is_array($apiData) && !empty($apiData)) {
+            if (is_array($apiData) && $apiData !== []) {
                 $this->saveNodesCache($apiData);
                 $this->setNodes($apiData['nodes']);
             } elseif (is_array($cachedData)) {
@@ -217,7 +223,7 @@ class NodeRepository extends Repository
     public function getAllNodes(): array
     {
         $data = $this->getNodes();
-        if (!$data) {
+        if ($data === []) {
             $data = [];
         }
         return $data;
@@ -228,7 +234,7 @@ class NodeRepository extends Repository
      */
     public function getOnlineNodes(): array
     {
-        if (empty($this->nodesOnline)) {
+        if ($this->nodesOnline === []) {
             $online = [];
             foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == true) {
@@ -245,7 +251,7 @@ class NodeRepository extends Repository
      */
     public function getOfflineNodes(): array
     {
-        if (empty($this->nodesOffline)) {
+        if ($this->nodesOffline === []) {
             $offline = [];
             foreach ((array)$this->nodes as $node) {
                 if ($node['flags']['online'] == false) {
@@ -266,7 +272,7 @@ class NodeRepository extends Repository
             $count = 0;
             $nodes = $this->getOnlineNodes();
             foreach ($nodes as $node) {
-                $count = $count + (int) $node['statistics']['clients'];
+                $count += (int) $node['statistics']['clients'];
             }
             $this->clientCount = $count;
         }

@@ -42,12 +42,12 @@ class NodeTest extends UnitTestCase
 	 */
 	protected $subject = NULL;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$this->subject = new Node();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		unset($this->subject);
 	}
@@ -55,7 +55,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getIdReturnsInitialValueForString()
+	public function getIdReturnsInitialValueForString(): void
 	{
 		$this->assertSame(
 			'',
@@ -66,7 +66,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setIdForStringSetsId()
+	public function setIdForStringSetsId(): void
 	{
 		$this->subject->setId('Conceived at T3CON10');
 
@@ -80,7 +80,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getHostnameReturnsInitialValueForString()
+	public function getHostnameReturnsInitialValueForString(): void
 	{
 		$this->assertSame(
 			'',
@@ -91,7 +91,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setHostnameForStringSetsHostname()
+	public function setHostnameForStringSetsHostname(): void
 	{
 		$this->subject->setHostname('Conceived at T3CON10');
 
@@ -105,7 +105,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getRoleReturnsInitialValueForString()
+	public function getRoleReturnsInitialValueForString(): void
 	{
 		$this->assertSame(
 			'',
@@ -116,7 +116,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setRoleForStringSetsRole()
+	public function setRoleForStringSetsRole(): void
 	{
 		$this->subject->setRole('Conceived at T3CON10');
 
@@ -130,7 +130,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getOnlineReturnsInitialValueForBool()
+	public function getOnlineReturnsInitialValueForBool(): void
 	{
 		$this->assertSame(
 			FALSE,
@@ -141,7 +141,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setOnlineForBoolSetsOnline()
+	public function setOnlineForBoolSetsOnline(): void
 	{
 		$this->subject->setOnline(TRUE);
 
@@ -155,7 +155,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function getGatewayReturnsInitialValueForString()
+	public function getGatewayReturnsInitialValueForString(): void
 	{
 		$this->assertSame(
 			'',
@@ -166,7 +166,7 @@ class NodeTest extends UnitTestCase
 	/**
 	 * @test
 	 */
-	public function setGatewayForStringSetsGateway()
+	public function setGatewayForStringSetsGateway(): void
 	{
 		$this->subject->setGateway('Conceived at T3CON10');
 
