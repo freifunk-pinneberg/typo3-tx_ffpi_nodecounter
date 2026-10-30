@@ -237,7 +237,7 @@ class NodeRepository extends Repository
         if ($this->nodesOnline === []) {
             $online = [];
             foreach ((array)$this->nodes as $node) {
-                if ($node['flags']['online'] == true) {
+                if ($this->isNodeOnline($node) === true) {
                     $online[] = $node;
                 }
             }
