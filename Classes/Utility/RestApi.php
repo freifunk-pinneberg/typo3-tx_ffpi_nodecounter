@@ -191,7 +191,7 @@ class RestApi
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         //We want to set a User-Agent
-        $host = preg_replace('/[^a-zA-Z0-9.-]/', '', (string) $_SERVER['HTTP_HOST']);
+        $host = preg_replace('/[^a-zA-Z0-9.-]/', '', (string) $_SERVER['HTTP_HOST'] ?? gethostname());
         curl_setopt($curl, CURLOPT_USERAGENT, 'TYPO3 at ' . $host);
 
         //Timeout

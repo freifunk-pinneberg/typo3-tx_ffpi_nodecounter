@@ -198,22 +198,22 @@ class NodeRepository extends Repository
         $cachedData = $this->getCachedNodes();
         $age = time();
         if (is_array($cachedData)) {
-            $cachedTime = $cachedData['cacheTime'];
-            $age -= $cachedTime;
+            $cachedTime = (int)$cachedData['cacheTime'];
+            $age -= ($cachedTime ?? 0);
         }
         if (!is_array($cachedData) || $age > 90) {
             //Cache leer order abgelaufen.
             $apiData = $this->getNodesFromApi();
             if (is_array($apiData) && $apiData !== []) {
                 $this->saveNodesCache($apiData);
-                $this->setNodes($apiData['nodes']);
+                $this->setNodes($apiData['nodes'] ?? []);
             } elseif (is_array($cachedData)) {
-                $this->setNodes($cachedData['nodes']);
+                $this->setNodes($cachedData['nodes'] ?? []);
             } else {
                 $this->setNodes([]);
             }
         } else {
-            $this->setNodes($cachedData['nodes']);
+            $this->setNodes($cachedData['nodes'] ?? []);
         }
     }
 
@@ -254,7 +254,7 @@ class NodeRepository extends Repository
         if ($this->nodesOffline === []) {
             $offline = [];
             foreach ((array)$this->nodes as $node) {
-                if ($node['flags']['online'] == false) {
+                if ($this->isNodeOnline($node) === false) {
                     $offline[] = $node;
                 }
             }
@@ -272,7 +272,7 @@ class NodeRepository extends Repository
             $count = 0;
             $nodes = $this->getOnlineNodes();
             foreach ($nodes as $node) {
-                $count += (int) $node['statistics']['clients'];
+                $count += (int) $node['statistics']['clients'] ?? $node['status']['clients'] ?? 0;
             }
             $this->clientCount = $count;
         }
@@ -313,6 +313,18 @@ class NodeRepository extends Repository
             $this->nodesAllCount = $allCount;
         }
         return $this->nodesAllCount;
+    }
+
+    /**
+     * @param mixed $node
+     */
+    private function isNodeOnline($node): ?bool
+    {
+        if (!is_array($node)) {
+            return null;
+        }
+        $online = $node['flags']['online'] ?? $node['status']['online'] ?? $node['is_online'] ?? null;
+        return $online === null ? null : (bool)$online;
     }
 
 }
